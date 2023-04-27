@@ -162,6 +162,17 @@ export default pinia
   export const TIME_OUT = 10000
   ```
 
+* 第三种：配置`.env/.env.production/.env.development`
+
+  * `.env`表示不管生产或开发环境都读取
+  * `.env.production`表示生产环境读取
+  * `.env.development`表示开发环境读取
+  * `.env.development.local`中的`.local` 表示是否在本地或推动到git仓库中
+
+  ```javascript
+  
+  ```
+
   
 
 ## 问题汇总
