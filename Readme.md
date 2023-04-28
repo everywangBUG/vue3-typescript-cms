@@ -1,7 +1,3 @@
-# 接口替换
-
-http://123.207.32.32/
-
 # 创建Vue项目
 
 ## 使用webpack搭建
@@ -18,11 +14,11 @@ http://123.207.32.32/
 
 ### `env.d.ts`
 
-- 表示引用文件，可以定义`interface` 和`type` 等TS类型
+- 表示声明或引用文件，可以定义`interface` 和`type` 等TS类型
 
 ### tsconfig.node.json
 
-- 建议项目中的单独的配置在该文件中修改（不强制）
+- 建议项目中的单独的配置或打包相关配置在该文件中修改（不强制）
 
 ```javascript
 {
@@ -48,7 +44,7 @@ http://123.207.32.32/
 
 ### tsconfig.json
 
-- 建议tsconfig.json配置完毕尽量不要修改
+- 建议tsconfig.json配置完毕尽量不要修改，推荐开发环境下的配置在此处修改
 
 ```javascript
 {
@@ -169,11 +165,74 @@ export default pinia
   * `.env.development`表示开发环境读取
   * `.env.development.local`中的`.local` 表示是否在本地或推动到git仓库中
 
-  ```javascript
-  
-  ```
 
-  
+## Element-plus集成
+
+### VUE3集成
+
+* elementUI(vue2)、elementPlus(vue3)、VantUI(vue3)
+* antdesignVue
+
+### 引入的方式
+
+* 见官网：`https://element-plus.org/zh-CN/guide/design.html`
+
+#### 全局引入
+
+* 不能做`tree shaking` 
+
+```typescript
+// 全局引入
+import 'element-plus/dist/index.css'
+import ElementPlus from 'element-plus'
+app.use(ElementPlus)
+```
+
+#### 按需引入
+
+##### 在`main.ts`中引用
+
+```typescript
+// 按需手动引入
+import { ElButton } from 'element-plus'
+app.component(ElButton.name, ElButton)
+```
+
+##### 在页面组件中直接引用
+
+```vue
+<template>
+    <el-row class="mb-4">
+    <el-button disabled>Default</el-button>
+    <el-button type="primary" disabled>Primary</el-button>
+    <el-button type="success" disabled>Success</el-button>
+    <el-button type="info" disabled>Info</el-button>
+    <el-button type="warning" disabled>Warning</el-button>
+    <el-button type="danger" disabled>Danger</el-button>
+  </el-row>
+</template>
+<script>
+    import { ElButton } from 'element-plus'
+</script>
+```
+
+##### 使用volar插件按需自动引入(推荐)
+
+**vite配置**
+
+* 类型提示的较好，比较推荐
+* 自动导入的插件：`npm install -D unplugin-vue-components unplugin-auto-import`
+
+###### 问题
+
+* 引入完毕后多了两个文件`auto-imports.d.ts` `compponents.d.ts` 
+* 此时引入组件时没有类型声明提示，在`tsconfig.json`的`include`字段中加入`"auto-imports.d.ts"` `"components.d.ts"`  
+
+
+
+
+
+
 
 ## 问题汇总
 
@@ -186,4 +245,8 @@ vscode右下角会有警报提示，根据提示强制清除npm缓存命令
 - `npm cache clean --force` 
 
 - 重新安装对应的库即可
+
+# 接口替换
+
+http://123.207.32.32/
 
