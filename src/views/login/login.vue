@@ -1,23 +1,44 @@
 <template>
-  <div class="home">
-    <h2>这是登录页面</h2>
+  <div class="login">
+    <h1 class="title">宏远后台管理系统</h1>
+    <login-tabs />
+    <div class="login-input">
+      <div class="account">
+        <div>账号</div>
+        <el-input type="text" v-model="username" />
+      </div>
+      <div class="password">
+        密码
+        <el-input type="text" v-model="username" />
+      </div>
+    </div>
+    <login-pannel />
   </div>
 </template>
 
 <script setup lang="ts">
-import { myRequest } from '@/service'
+import { ref } from 'vue'
+import LoginPannel from './c-cpns/login-pannel.vue'
+import LoginTabs from './c-cpns/login-tabs.vue'
 
-myRequest
-  .get({
-    url: 'search?keywords=海阔天空'
-  })
-  .then((res) => {
-    console.log(res)
-  })
+const username = ref('')
 </script>
 
-<style lang="less" scoped>
-.home {
-  color: red;
+<style scoped lang="less">
+.login {
+  background-color: #fff;
+  width: 330px;
+  margin-bottom: 150px;
+
+  .title {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  .login-input {
+    .account {
+      display: flex;
+    }
+  }
 }
 </style>

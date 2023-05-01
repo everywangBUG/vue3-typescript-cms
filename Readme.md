@@ -228,9 +228,10 @@ app.component(ElButton.name, ElButton)
 * 引入完毕后多了两个文件`auto-imports.d.ts` `compponents.d.ts` 
 * 此时引入组件时没有类型声明提示，在`tsconfig.json`的`include`字段中加入`"auto-imports.d.ts"` `"components.d.ts"`  
 
+### css修改样式
 
-
-
+* 第一种：在common.css中`:root: { --el-button-size: 50px !import }`，加上!import确保覆盖
+* 在组件中进行样式的修改并覆盖即可
 
 
 
