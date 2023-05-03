@@ -29,10 +29,13 @@ import { type ElForm, type FormRules, ElMessage } from 'element-plus'
 import useLoginStore from '@/store/login/login'
 import type { IAccount } from '@/types/index'
 import { reactive, ref } from 'vue'
+import { localCache } from '@/utils/cache'
+import { CACHE_NAME, CACHE_PASSWORD } from '@/constants/login'
 
 const formLabelAccount = reactive<IAccount>({
-  name: '',
-  password: ''
+  // 有密码记住密码功能
+  name: localCache.getCache(CACHE_NAME) ?? '',
+  password: localCache.getCache(CACHE_PASSWORD) ?? ''
 })
 
 // 帐号校验规则
@@ -50,14 +53,23 @@ const accountRules = reactive<FormRules>({
 // 执行帐号的登录逻辑
 const formRef = ref<InstanceType<typeof ElForm>>()
 const loginStore = useLoginStore()
-function loginAction() {
+function loginAction(isRmbPsw: boolean) {
   formRef.value?.validate((valid) => {
     if (valid) {
       // 1.获取用户名和密码
       const name = formLabelAccount.name
       const password = formLabelAccount.password
       // 2.新建文件夹文件在专属模块发送网络请求，在service中post/get到的数据存储到piana中的store/login/login中
-      loginStore.loginAccountAction({ name, password })
+      // 3.登录成功后则记住密码
+      loginStore.loginAccountAction({ name, password }).then((res) => {
+        if (isRmbPsw) {
+          localCache.setCache(CACHE_NAME, name)
+          localCache.setCache(CACHE_PASSWORD, password)
+        } else {
+          localCache.removeCache(CACHE_NAME)
+          localCache.removeCache(CACHE_PASSWORD)
+        }
+      })
 
       // 3.记住密码
     } else {

@@ -26,7 +26,7 @@
       </el-tabs>
     </div>
     <div class="control">
-      <el-checkbox v-model="isRemember" label="记住密码" size="large" />
+      <el-checkbox v-model="isRmbPsw" label="记住密码" size="large" />
       <el-link type="primary" :underline="false">忘记密码</el-link>
     </div>
     <el-button class="login-btn" type="primary" size="large" @click="handleBtnLogin">
@@ -36,11 +36,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import PannelAccount from './pannel-account.vue'
 import PannelPhone from './pannel.phone.vue'
+import { localCache } from '@/utils/cache'
 
-const isRemember = ref<boolean>(false)
+const isRmbPsw = ref<boolean>(localCache.getCache('isRmbPswRealTime') ?? false)
+// 使用watch拿到最新的是否记住密码的值
+watch(isRmbPsw, (isRmbPswRealTime) => {
+  localCache.setCache('isRmbPswRealTime', isRmbPswRealTime)
+})
 const activeName = ref<string>('userlogin')
 const accountRef = ref<InstanceType<typeof PannelAccount>>()
 
@@ -48,8 +53,8 @@ function handleLoginClick() {}
 
 function handleBtnLogin() {
   if (activeName.value === 'userlogin') {
-    // 1. 获取子组件的实例
-    accountRef.value?.loginAction()
+    // 1. 获取子组件的实例，将是否记住密码选项传递给子组件
+    accountRef.value?.loginAction(isRmbPsw.value)
   } else {
     console.log('用户进行手机登录')
   }
