@@ -27,7 +27,7 @@
 <script setup lang="ts" name="account">
 import { type ElForm, type FormRules, ElMessage } from 'element-plus'
 import useLoginStore from '@/store/login/login'
-import type { IAccount } from '@/store/login/login'
+import type { IAccount } from '@/types/index'
 import { reactive, ref } from 'vue'
 
 const formLabelAccount = reactive<IAccount>({

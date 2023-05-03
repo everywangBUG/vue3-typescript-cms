@@ -23,7 +23,7 @@ const useLoginStore = defineStore('login', {
       // 2.使用localStorage或sessionStorages本地缓存，可以使用封装过后的localStorage
       localCache.setCache('token', this.token)
 
-      // 3.页面跳转
+      // 3.页面跳转到main页面
       router.push('/main')
     }
   }
