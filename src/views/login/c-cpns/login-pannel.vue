@@ -10,6 +10,12 @@
       >
         <!-- 账号登录 -->
         <el-tab-pane label="账号登录" name="userlogin">
+          <template #label>
+            <div class="labelaccount">
+              <el-icon><Avatar /></el-icon>
+              <span>帐号登录</span>
+            </div>
+          </template>
           <PannelAccount ref="accountRef" />
         </el-tab-pane>
 
@@ -63,6 +69,7 @@ function handleBtnLogin() {
 
 <style lang="less" scoped>
 .login-pannel {
+  width: 330px;
   .login-tabs {
     .tabs {
       .label {
