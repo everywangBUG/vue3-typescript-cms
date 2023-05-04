@@ -15,14 +15,14 @@ const useLoginStore = defineStore('login', {
     async loginAccountAction(account: IAccount) {
       const loginResult = await accountLogin(account)
       // 1.帐号登录，获取token的信息，把token结果保存到state中
+      console.log(loginResult)
       const id = loginResult.data.data.id
-      const name = loginResult.data.data.name
       this.token = loginResult.data.data.token
 
       // 2.使用localStorage或sessionStorages本地缓存，可以使用封装过后的localStorage
       localCache.setCache('token', this.token)
 
-      // 3.获取用户登录的详细信息(权限信息、角色信息、部门等)
+      // 3.获取用户登录的详细信息(权限信息、角色信息、部门等)，存到state中
       const userInfoRes = await userInfoById(id)
       this.userInfo = userInfoRes
 

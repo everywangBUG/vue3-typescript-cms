@@ -15,12 +15,12 @@ class MyRequest {
 
     //针对特定的myRequest实例添加拦截器
     this.instance.interceptors.request.use(
-      // this.interceptors?.requestSuccessFn,
-      this.interceptors?.requestFailureFn
+      config.interceptors?.requestSuccessFn,
+      config.interceptors?.requestFailureFn
     )
     this.instance.interceptors.response.use(
-      this.interceptors?.responseSuccessFn,
-      this.interceptors?.responseFailureFn
+      config.interceptors?.responseSuccessFn,
+      config.interceptors?.responseFailureFn
     )
 
     //每个instance添加response和request拦截器： loading/token/修改配置

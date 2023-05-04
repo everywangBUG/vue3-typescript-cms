@@ -12,9 +12,18 @@ export const myRequest = new MyRequest({
       const token = localCache.getCache(LOGIN_TOKEN)
       // 如果header和token有值，则配置config拦截，类型缩小
       if (config.headers && token) {
-        config.headers.Authorization = 'Bearer ' + token
+        config.headers.Authorization = `Bearer ${token}`
       }
       return config
+    },
+    requestFailureFn: (err) => {
+      return err
+    },
+    responseSuccessFn: (res) => {
+      return res
+    },
+    responseFailureFn: (err) => {
+      return err
     }
   }
 })
