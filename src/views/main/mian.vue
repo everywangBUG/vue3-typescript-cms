@@ -1,27 +1,41 @@
 <template>
   <div class="main">
-    <h2>这是main页面</h2>
-    <button @click="handleExitLand">退出登录</button>
+    <el-container class="main-content">
+      <el-aside width="240px">
+        <MainMenu />
+      </el-aside>
+      <el-container>
+        <el-header height="50px">
+          <MainHeader />
+        </el-header>
+        <el-main>Main</el-main>
+      </el-container>
+    </el-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import { LOGIN_TOKEN } from '@/constants/login'
-import { localCache } from '@/utils/cache'
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
-
-function handleExitLand() {
-  // 删除token
-  localCache.removeCache(LOGIN_TOKEN)
-  // 退回到login页面
-  router.push('/login')
-}
+import { MainMenu, MainHeader } from '@/components/index'
 </script>
 
 <style lang="less" scoped>
 .main {
-  color: skyblue;
+  height: 100%;
+
+  .main-content {
+    height: 100%;
+    .el-aside {
+      background-color: pink;
+      height: 100%;
+    }
+    .el-container {
+      .el-header {
+        background-color: orange;
+      }
+      .el-main {
+        background-color: khaki;
+      }
+    }
+  }
 }
 </style>
