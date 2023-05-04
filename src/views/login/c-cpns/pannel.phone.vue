@@ -50,8 +50,6 @@ const handleSend = function () {}
     .verify {
       width: 50%;
     }
-    .verify-btn {
-    }
   }
 }
 </style>
