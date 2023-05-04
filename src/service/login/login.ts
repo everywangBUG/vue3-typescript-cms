@@ -20,3 +20,9 @@ export function userInfoById(id: number) {
     // }
   })
 }
+
+export function menusInfoById(id: number) {
+  return myRequest.get({
+    url: `/role/${id}/menu`
+  })
+}
