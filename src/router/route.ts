@@ -14,7 +14,25 @@ const routes = [
   },
   {
     path: '/main',
-    component: () => import('@/views/main/mian.vue')
+    component: () => import('@/views/main/main.vue'),
+    children: [
+      {
+        path: '/main/analysis/dashboard',
+        component: () => import('@/views/main/analysis/dashboard/dashboard.vue')
+      },
+      {
+        path: '/main/analysis/overview',
+        component: () => import('@/views/main/analysis/overview/overview.vue')
+      },
+      {
+        path: '/main/system/role',
+        component: () => import('@/views/main/system/role/role.vue')
+      },
+      {
+        path: '/main/system/user',
+        component: () => import('@/views/main/system/user/user.vue')
+      }
+    ]
   },
   {
     path: '/:pathMatch(.*)',
@@ -33,11 +51,11 @@ const router = createRouter({
 router.beforeEach((to) => {
   // 如果登录成功，即token验证成功，进入main页面
   // token没有获取到值的时候，跳转到login页面
-  const token = localCache.getCache('token')
+  const token = localCache.getCache(LOGIN_TOKEN)
   if (to.path.startsWith('/main') && !token) {
-    return '/login'
+    return LOGIN_TOKEN
   }
-  if (to.path === '/login' && token) {
+  if (to.path === LOGIN_TOKEN && token) {
     return '/main'
   }
 })

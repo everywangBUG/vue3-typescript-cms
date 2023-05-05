@@ -24,7 +24,9 @@
             </template>
 
             <template v-for="subitem in item.children" :key="subitem.id">
-              <el-menu-item :index="subitem.id + ''">{{ subitem.name }}</el-menu-item>
+              <el-menu-item :index="subitem.id + ''" @click="handleMenuClick(subitem)">
+                {{ subitem.name }}
+              </el-menu-item>
             </template>
           </el-sub-menu>
         </template>
@@ -35,6 +37,7 @@
 
 <script setup lang="ts">
 import useLoginStore from '@/store/login/login'
+import { useRouter } from 'vue-router'
 
 // 0.定义props接收父组件传来的isCollapse
 defineProps({
@@ -47,6 +50,13 @@ defineProps({
 // 1.获取动态菜单
 const loginStore = useLoginStore()
 const menuInfo = loginStore.menuInfo
+
+const router = useRouter()
+// 2.点击menunav中的选项跳转到对象的main页面
+function handleMenuClick(item: any) {
+  const itemUrl = item.url
+  router.push(itemUrl)
+}
 </script>
 
 <style lang="less" scoped>
