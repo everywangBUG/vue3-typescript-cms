@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <el-container class="main-content">
-      <el-aside width="240px">
+      <el-aside width="200px">
         <MainMenu />
       </el-aside>
       <el-container>
@@ -25,16 +25,8 @@ import { MainMenu, MainHeader } from '@/components/index'
   .main-content {
     height: 100%;
     .el-aside {
-      background-color: pink;
+      background-color: #0d1e37;
       height: 100%;
-    }
-    .el-container {
-      .el-header {
-        background-color: orange;
-      }
-      .el-main {
-        background-color: khaki;
-      }
     }
   }
 }

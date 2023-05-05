@@ -10,6 +10,7 @@ import { createStyleImportPlugin, ElementPlusResolve } from 'vite-plugin-style-i
 export default defineConfig({
   plugins: [
     vue(),
+    // 按需加载组件
     AutoImport({
       resolvers: [ElementPlusResolver()]
     }),
