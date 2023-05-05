@@ -5,8 +5,8 @@
     </div>
     <div class="header-content">
       <div class="bread-crumbs">面包屑</div>
+      <HeaderInfo />
     </div>
-    <button @click="handleLogout">退出登录</button>
   </div>
 </template>
 
@@ -15,15 +15,10 @@ import { LOGIN_TOKEN } from '@/constants/login'
 import { localCache } from '@/utils/cache'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
+import HeaderInfo from './c-cpns/header-info.vue'
 
 let isFold = ref<boolean>(false)
 const router = useRouter()
-
-// 处理退出逻辑
-function handleLogout() {
-  localCache.removeCache(LOGIN_TOKEN)
-  router.push('/login')
-}
 
 // 子组件定义自定义事件
 const emit = defineEmits(['foldChange'])
@@ -51,7 +46,11 @@ function handleMenuClick() {
     cursor: pointer;
   }
   .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin: 0 10px;
+    width: 100%;
     .bread-crumbs {
     }
   }
