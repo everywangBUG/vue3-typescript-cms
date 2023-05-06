@@ -51,7 +51,7 @@ const localRoutes = [
 // router.addRoute('main', localRoutes[0])
 // router.addRoute('main', localRoutes[1])
 
-// 路由守卫
+// 路由导航守卫
 //参数：to(跳转的位置)/from(从哪里跳转过来)
 //返回值：返回值决定了导航的路径(不返回或返回undefined，默认跳转)
 router.beforeEach((to) => {

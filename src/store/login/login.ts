@@ -15,9 +15,9 @@ interface ILoginState {
 
 const useLoginStore = defineStore('login', {
   state: (): ILoginState => ({
-    token: localCache.getCache(LOGIN_TOKEN) ?? '',
-    userInfo: localCache.getCache(USER_INFO) ?? {},
-    menuInfo: localCache.getCache(MENUS_INFO) ?? {}
+    token: '',
+    userInfo: {},
+    menuInfo: []
   }),
   // 异步请求网络数据
   actions: {
@@ -53,6 +53,23 @@ const useLoginStore = defineStore('login', {
 
       // 4.页面跳转到main页面
       router.push('/main')
+    },
+    // 加载本地数据
+    loadLocalCacheAction() {
+      // 用户进行刷新获取存储中的用户token、用户信息、菜单信息存到state中
+      const token = localCache.getCache(LOGIN_TOKEN)
+      const userInfo = localCache.getCache(USER_INFO)
+      const menusInfo = localCache.getCache(MENUS_INFO)
+      // 如果用户登录了
+      if (token && userInfo && menusInfo) {
+        this.token = token
+        this.userInfo = userInfo
+        this.menuInfo = menusInfo
+
+        // 动态添加路由
+        const routes = mapMenusRoutes(menusInfo)
+        routes.forEach((route) => router.addRoute('main', route))
+      }
     }
   }
 })

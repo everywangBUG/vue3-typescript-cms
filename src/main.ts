@@ -4,6 +4,7 @@ import '@/assets/css/index.less'
 import router from './router/route'
 import pinia from './store'
 import registerIcons from './global/registerIcons'
+import useLoginStore from './store/login/login'
 
 // 1.对ElMessage和ElLoading全局注册引入element-plus的所有样式
 // import 'element-plus/dist/index.css'
@@ -15,5 +16,10 @@ import registerIcons from './global/registerIcons'
 const app = createApp(App)
 app.use(registerIcons)
 app.use(pinia)
+// 在使用pinia下面完成store中的加载本地的所有数据
+const loginStore = useLoginStore()
+loginStore.loadLocalCacheAction()
+
+// 等本地的路由全部加载完毕，再加载路由
 app.use(router)
 app.mount('#app')
