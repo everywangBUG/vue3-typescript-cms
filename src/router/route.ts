@@ -48,8 +48,8 @@ const localRoutes = [
 ]
 
 // 使用addRoute动态路由的添加
-router.addRoute('main', localRoutes[0])
-router.addRoute('main', localRoutes[1])
+// router.addRoute('main', localRoutes[0])
+// router.addRoute('main', localRoutes[1])
 
 // 路由守卫
 //参数：to(跳转的位置)/from(从哪里跳转过来)
