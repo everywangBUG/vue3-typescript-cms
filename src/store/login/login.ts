@@ -4,6 +4,7 @@ import { accountLogin, menusInfoById, userInfoById } from '@/service/login/login
 import type { IAccount } from '@/types/login'
 import { localCache } from '@/utils/cache'
 import { defineStore } from 'pinia'
+import type { RouteRecordRaw } from 'vue-router'
 
 // 指定箭头函数的类型
 interface ILoginState {
@@ -38,13 +39,36 @@ const useLoginStore = defineStore('login', {
       // console.log('userInfoRes:', userInfoRes.data.data)
       // console.log('userInfoRole', this.userInfo.role)
 
-      // 4.根据用户角色权限获取菜单信息，将菜单信息存到state和浏览器内存中
+      // 4.根据用户角色权限动态获取菜单信息，将菜单信息存到state和浏览器内存中
       const menusInfoRes = await menusInfoById(this.userInfo.role.id)
       const menusInfo = menusInfoRes.data.data
       this.menuInfo = menusInfo
       localCache.setCache(MENUS_INFO, menusInfo)
       // console.log('menus:', menusInfoRes)
       // console.log('menuInfo:', menusInfoRes.data.data)
+
+      // 将动态获取的菜单路由放在数组中
+      // 1.1.定义一个数组，类型是router中的类型
+      const localRoutes: RouteRecordRaw[] = []
+      // 1.2.读取router/main中的所有ts文件，加载main下面的所有的ts文件，中间的两个**表示匹配main下面的所有子目录
+      const files: Record<string, any> = import.meta.glob('../../router/main/**/*.ts', {
+        eager: true
+      })
+      // 1.3.遍历出模块，拿到path属性
+      for (let key in files) {
+        const module = files[key]
+        localRoutes.push(module.default)
+      }
+      // console.log('localRoutes:', loaclRoutes)
+      // console.log('menusInfo:', menusInfo)
+      // 1.4.根据菜单匹配正确的路由
+      for (let menu of menusInfo) {
+        for (let subMenu of menu.children) {
+          const route = localRoutes.find((item) => item.path === subMenu.url)
+          // 类型缩小
+          if (route) router.addRoute('main', route)
+        }
+      }
 
       // 4.页面跳转到main页面
       router.push('/main')

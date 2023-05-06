@@ -14,25 +14,8 @@ const routes = [
   },
   {
     path: '/main',
-    component: () => import('@/views/main/main.vue'),
-    children: [
-      {
-        path: '/main/analysis/dashboard',
-        component: () => import('@/views/main/analysis/dashboard/dashboard.vue')
-      },
-      {
-        path: '/main/analysis/overview',
-        component: () => import('@/views/main/analysis/overview/overview.vue')
-      },
-      {
-        path: '/main/system/role',
-        component: () => import('@/views/main/system/role/role.vue')
-      },
-      {
-        path: '/main/system/user',
-        component: () => import('@/views/main/system/user/user.vue')
-      }
-    ]
+    name: 'main',
+    component: () => import('@/views/main/main.vue')
   },
   {
     path: '/:pathMatch(.*)',
@@ -44,6 +27,29 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes
 })
+
+const localRoutes = [
+  {
+    path: '/main/analysis/dashboard',
+    component: () => import('@/views/main/analysis/dashboard/dashboard.vue')
+  },
+  {
+    path: '/main/analysis/overview',
+    component: () => import('@/views/main/analysis/overview/overview.vue')
+  },
+  {
+    path: '/main/system/role',
+    component: () => import('@/views/main/system/role/role.vue')
+  },
+  {
+    path: '/main/system/user',
+    component: () => import('@/views/main/system/user/user.vue')
+  }
+]
+
+// 使用addRoute动态路由的添加
+router.addRoute('main', localRoutes[0])
+router.addRoute('main', localRoutes[1])
 
 // 路由守卫
 //参数：to(跳转的位置)/from(从哪里跳转过来)
