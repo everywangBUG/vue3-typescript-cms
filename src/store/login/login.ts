@@ -1,9 +1,8 @@
 import { LOGIN_TOKEN, MENUS_INFO, USER_INFO } from '@/constants/login'
-import router from '@/router/route'
+import router, { addRoutesWithMenu } from '@/router/route'
 import { accountLogin, menusInfoById, userInfoById } from '@/service/login/login'
 import type { IAccount } from '@/types/login'
 import { localCache } from '@/utils/cache'
-import { mapMenusRoutes } from '@/utils/map-menus-to-routes'
 import { defineStore } from 'pinia'
 
 // 指定箭头函数的类型
@@ -47,11 +46,10 @@ const useLoginStore = defineStore('login', {
       // console.log('menus:', menusInfoRes)
       // console.log('menuInfo:', menusInfoRes.data.data)
 
-      // 重点：根据菜单动态添加路由
-      const routes = mapMenusRoutes(menusInfo)
-      routes.forEach((route) => router.addRoute('main', route))
+      // 4重点：根据菜单动态添加路由
+      addRoutesWithMenu(this.menuInfo)
 
-      // 4.页面跳转到main页面
+      // 5  .页面跳转到main页面
       router.push('/main')
     },
     // 加载本地数据
@@ -66,9 +64,7 @@ const useLoginStore = defineStore('login', {
         this.userInfo = userInfo
         this.menuInfo = menusInfo
 
-        // 动态添加路由
-        const routes = mapMenusRoutes(menusInfo)
-        routes.forEach((route) => router.addRoute('main', route))
+        addRoutesWithMenu(this.menuInfo)
       }
     }
   }

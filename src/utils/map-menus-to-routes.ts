@@ -1,4 +1,3 @@
-import router from '@/router/route'
 import type { RouteRecordRaw } from 'vue-router'
 
 function loadLocalRoutes() {
@@ -18,17 +17,21 @@ function loadLocalRoutes() {
   return localRoutes
 }
 
+// 第一次进到main中的时候，进入到firstMenu的url中
+export let firstMenu: any = null
 export function mapMenusRoutes(menusInfo: any[]) {
   // 1.加载本地路由
   const localRoutes = loadLocalRoutes()
-  const routes: RouteRecordRaw[] = []
 
   // 2.根据菜单匹配正确的路由
-  for (let menu of menusInfo) {
-    for (let subMenu of menu.children) {
+  const routes: RouteRecordRaw[] = []
+  for (const menu of menusInfo) {
+    for (const subMenu of menu.children) {
       const route = localRoutes.find((item) => item.path === subMenu.url)
       // 类型缩小
       if (route) routes.push(route)
+      // 记录第一个被匹配到的菜单
+      if (!firstMenu && route) firstMenu = subMenu
     }
   }
   return routes
