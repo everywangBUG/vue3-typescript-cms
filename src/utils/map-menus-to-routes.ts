@@ -1,5 +1,12 @@
 import type { RouteRecordRaw } from 'vue-router'
 
+// 第一次进到main中的时候，进入到firstMenu的url中
+export let firstMenu: any = null
+
+/**
+ * @description 通过路径获取所有的动态路由path放在一个数组中
+ * @returns {number} localRoutes
+ */
 function loadLocalRoutes() {
   // 1.1.定义一个数组，类型是router中的类型
   const localRoutes: RouteRecordRaw[] = []
@@ -17,8 +24,11 @@ function loadLocalRoutes() {
   return localRoutes
 }
 
-// 第一次进到main中的时候，进入到firstMenu的url中
-export let firstMenu: any = null
+/**
+ * @description 根据菜单显示匹配正确的路由
+ * @param menusInfo
+ * @returns
+ */
 export function mapMenusRoutes(menusInfo: any[]) {
   // 1.加载本地路由
   const localRoutes = loadLocalRoutes()
@@ -35,4 +45,19 @@ export function mapMenusRoutes(menusInfo: any[]) {
     }
   }
   return routes
+}
+
+/**
+ * @description 根据路径匹配需要显示的菜单
+ * @param path 需要匹配的路径
+ * @param userMenu 所有的菜单
+ */
+export function mapPathToMenu(path: string, menuInfo: any[]) {
+  for (const menu of menuInfo) {
+    for (const subMenu of menu.children) {
+      if (subMenu.url === path) {
+        return subMenu
+      }
+    }
+  }
 }

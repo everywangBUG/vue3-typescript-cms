@@ -6,7 +6,7 @@
     </div>
     <div calss="menu-container">
       <el-menu
-        default-active="39"
+        :default-active="defaultActive"
         :collapse="isFold"
         text-color="#b7bdc3"
         active-text-color="#fff"
@@ -37,7 +37,9 @@
 
 <script setup lang="ts">
 import useLoginStore from '@/store/login/login'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { mapPathToMenu } from '@/utils/map-menus-to-routes'
+import { ref } from 'vue'
 
 // 0.定义props接收父组件传来的isCollapse
 defineProps({
@@ -57,6 +59,12 @@ function handleMenuClick(item: any) {
   const itemUrl = item.url
   router.push(itemUrl)
 }
+
+// 3.ElMenu默认选中的菜单
+const route = useRoute()
+// route.path当前点击菜单的对应的页面路径，拿到当前路径
+const pathMenu = mapPathToMenu(route.path, menuInfo)
+const defaultActive = ref(pathMenu.id + '')
 </script>
 
 <style lang="less" scoped>
