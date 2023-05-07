@@ -17,8 +17,7 @@
             <el-input placeholder="请输入手机号码"></el-input>
           </el-form-item>
         </el-col>
-      </el-row>
-      <el-row :gutter="100">
+
         <el-col :span="8">
           <el-form-item label="状态">
             <el-select placeholder="请选择查询的状态" style="width: 100%">
@@ -32,9 +31,9 @@
             <el-date-picker
               placeholder="请选择创建时间"
               type="daterange"
-              range-separator="To"
-              start-placeholder="Start date"
-              end-placeholder="End date"
+              range-separator="-"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
               size="large"
             />
           </el-form-item>
