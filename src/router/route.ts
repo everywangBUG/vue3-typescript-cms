@@ -29,25 +29,6 @@ const router = createRouter({
   routes
 })
 
-// const localRoutes = [
-//   {
-//     path: '/main/analysis/dashboard',
-//     component: () => import('@/views/main/analysis/dashboard/dashboard.vue')
-//   },
-//   {
-//     path: '/main/analysis/overview',
-//     component: () => import('@/views/main/analysis/overview/overview.vue')
-//   },
-//   {
-//     path: '/main/system/role',
-//     component: () => import('@/views/main/system/role/role.vue')
-//   },
-//   {
-//     path: '/main/system/user',
-//     component: () => import('@/views/main/system/user/user.vue')
-//   }
-// ]
-
 export function addRoutesWithMenu(menusInfo: any) {
   // 获取匹配的所有路由
   const routes = mapMenusRoutes(menusInfo)

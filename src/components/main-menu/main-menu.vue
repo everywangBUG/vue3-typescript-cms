@@ -39,7 +39,7 @@
 import useLoginStore from '@/store/login/login'
 import { useRoute, useRouter } from 'vue-router'
 import { mapPathToMenu } from '@/utils/map-menus-to-routes'
-import { ref } from 'vue'
+import { computed } from 'vue'
 
 // 0.定义props接收父组件传来的isCollapse
 defineProps({
@@ -63,8 +63,11 @@ function handleMenuClick(item: any) {
 // 3.ElMenu默认选中的菜单
 const route = useRoute()
 // route.path当前点击菜单的对应的页面路径，拿到当前路径
-const pathMenu = mapPathToMenu(route.path, menuInfo)
-const defaultActive = ref(pathMenu.id + '')
+const defaultActive = computed(() => {
+  // 当路径重新变化的时候，重新计算menu
+  const pathMenu = mapPathToMenu(route.path, menuInfo)
+  return pathMenu.id + ''
+})
 </script>
 
 <style lang="less" scoped>

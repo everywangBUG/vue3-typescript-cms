@@ -39,6 +39,10 @@ export function mapMenusRoutes(menusInfo: any[]) {
     for (const subMenu of menu.children) {
       const route = localRoutes.find((item) => item.path === subMenu.url)
       // 类型缩小
+      // 1.给route的顶层菜单增加重定向的功能(只需要添加一次)
+      if (!routes.find((item) => item.path === menu.url) && route) {
+        routes.push({ path: menu.url, redirect: route.path })
+      }
       if (route) routes.push(route)
       // 记录第一个被匹配到的菜单
       if (!firstMenu && route) firstMenu = subMenu
