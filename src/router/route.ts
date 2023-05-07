@@ -61,6 +61,7 @@ export function addRoutesWithMenu(menusInfo: any) {
     // 如果登录成功，即token验证成功，进入main页面
     // token没有获取到值的时候，跳转到login页面
     const token = localCache.getCache(LOGIN_TOKEN)
+    // 如果进入到以main开头的路由页面中
     if (to.path.startsWith('/main') && !token) {
       return '/login'
     }

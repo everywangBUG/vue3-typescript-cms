@@ -4,18 +4,19 @@
       <el-icon size="28px"><component :is="isFold ? 'Expand' : 'Fold'" /></el-icon>
     </div>
     <div class="header-content">
-      <div class="bread-crumbs">面包屑</div>
+      <div class="bread-crumbs">
+        <HeaderCrumb />
+      </div>
       <HeaderInfo />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { LOGIN_TOKEN } from '@/constants/login'
-import { localCache } from '@/utils/cache'
+import HeaderCrumb from './c-cpns/header-crumb.vue'
+import HeaderInfo from './c-cpns/header-info.vue'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
-import HeaderInfo from './c-cpns/header-info.vue'
 
 let isFold = ref<boolean>(false)
 const router = useRouter()

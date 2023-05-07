@@ -61,3 +61,21 @@ export function mapPathToMenu(path: string, menuInfo: any[]) {
     }
   }
 }
+
+interface IBreadcrumb {
+  name: string
+  path: string
+}
+
+export function mapPathToBreadCrumb(path: string, menuInfo: any[]) {
+  const breadcrumbs: IBreadcrumb[] = []
+  for (const menu of menuInfo) {
+    for (const subMenu of menu.children) {
+      if (subMenu.url === path) {
+        breadcrumbs.push({ name: menu.name, path: menu.url })
+        breadcrumbs.push({ name: subMenu.name, path: subMenu.url })
+      }
+    }
+  }
+  return breadcrumbs
+}
