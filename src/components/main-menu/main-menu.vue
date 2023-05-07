@@ -1,8 +1,10 @@
 <template>
   <div class="main-menu">
     <div class="logo">
-      <img class="menu-img" src="@/assets/imgs/logo.svg" alt="宏远后台管理系统" />
-      <h3 class="menu-title" v-show="!isFold">宏远管理系统</h3>
+      <div class="logo-item">
+        <img class="menu-img" src="@/assets/imgs/logo.svg" alt="宏远后台管理系统" />
+        <h3 class="menu-title" v-show="!isFold">宏远管理系统</h3>
+      </div>
     </div>
     <div calss="menu-container">
       <el-menu
@@ -75,29 +77,38 @@ const defaultActive = computed(() => {
   .main-content {
     .el-aside {
       .main-menu {
+        width: 100%;
         .logo {
           display: flex;
-          justify-content: flex-start;
-          align-items: center;
-          padding: 5px;
-          .menu-img {
-            width: 40px;
-            height: 40px;
-          }
-          .menu-title {
-            margin-left: 15px;
-            color: #fff;
-            white-space: nowrap;
+          .logo-item {
+            display: flex;
+            height: 50px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            overflow: hidden;
+            margin: auto;
+            .menu-img {
+              width: 25px;
+              height: 25px;
+            }
+            .menu-title {
+              margin-left: 15px;
+              color: #fff;
+              white-space: nowrap;
+            }
           }
         }
         .el-menu {
-          width: 200.5px;
+          .el-sub-menu {
+            margin-right: -1px;
+          }
           .el-menu-item.is-active {
             background-color: #0a60bd !important;
           }
 
           .el-menu-item {
-            width: 201px;
+            width: 200px;
           }
           .el-menu-item:hover {
             color: #fff;

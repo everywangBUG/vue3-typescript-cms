@@ -59,10 +59,15 @@ function handleLogout() {
 
         &:hover {
           background-color: #f2f2f2;
+          -moz-border-radius: 5px;
+          -webkit-border-radius: 5px;
+          border-radius: 5px;
         }
       }
     }
     .el-dropdown {
+      padding: 3px;
+      border-radius: 2px;
       .avatar-item {
         display: flex;
         align-items: center;
@@ -70,9 +75,19 @@ function handleLogout() {
         .el-avatar {
           display: flex;
           align-items: center;
-          margin: 0 3px 0 10px;
+          margin: 3px;
           cursor: pointer;
         }
+      }
+      &:focus {
+        outline: none;
+      }
+      &:hover {
+        outline: none !important;
+        background-color: #f2f2f2;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
       }
     }
     .name {
