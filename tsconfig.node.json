@@ -10,6 +10,6 @@
   ],
   "compilerOptions": {
     "composite": true,
-    "types": ["node"]
+    "types": ["ES2022", "node"]
   }
 }

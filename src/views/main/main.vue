@@ -40,6 +40,7 @@ function handleFoldChange(flag: boolean) {
       background-color: #001121;
       height: 100%;
       transition: width 1s ease-in-out;
+      overflow-y: hidden;
     }
     .el-header {
       display: flex;
