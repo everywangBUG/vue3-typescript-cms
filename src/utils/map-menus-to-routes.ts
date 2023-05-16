@@ -71,6 +71,12 @@ interface IBreadcrumb {
   path: string
 }
 
+/**
+ * @description 根据动态获取的路由菜单显示面包屑
+ * @param path
+ * @param menuInfo
+ * @returns
+ */
 export function mapPathToBreadCrumb(path: string, menuInfo: any[]) {
   const breadcrumbs: IBreadcrumb[] = []
   for (const menu of menuInfo) {

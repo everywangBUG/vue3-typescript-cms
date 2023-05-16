@@ -2,7 +2,6 @@
   <div class="user">
     <UserSearch />
     <UserContent />
-    <UserPagination />
   </div>
 </template>
 

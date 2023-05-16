@@ -9,11 +9,12 @@ const useSystemStore = defineStore('system', {
     usersTotalCount: 0
   }),
   actions: {
-    async postUsersListAction() {
-      const systemUserRes = await postUserListData()
+    async postUsersListAction(info: object) {
+      const systemUserRes = await postUserListData(info)
       const { totalCount, list } = systemUserRes.data.data
       this.usersTotalCount = totalCount
       this.usersList = list
+      console.log(systemUserRes.data.data)
     }
   }
 })

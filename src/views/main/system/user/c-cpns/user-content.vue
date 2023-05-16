@@ -27,7 +27,7 @@
           <!-- 使用作用域插槽，default指定插槽 -->
           <el-table-column prop="enable" label="状态" width="80px" align="center">
             <template #default="scope">
-              <el-button size="small" text>
+              <el-button size="small" plain type="primary">
                 {{ scope.row.enable ? '启用' : '禁用' }}
               </el-button>
             </template>
@@ -48,6 +48,18 @@
           </el-table-column>
         </el-table>
       </div>
+      <div class="pagination">
+        <el-pagination
+          v-model:current-page="currentPage"
+          v-model:page-size="pageSize"
+          :page-sizes="[10, 20, 30]"
+          :small="small"
+          layout="sizes, prev, pager, next, jumper, total"
+          :total="usersTotalCount"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -56,13 +68,44 @@
 import { storeToRefs } from 'pinia'
 import formatUTC from '@/utils/formatUTCTime'
 import useSystemStore from '@/store/main/system/system'
+import { ref } from 'vue'
+
+const currentPage = ref(1)
+const pageSize = ref(10)
+const small = ref(true)
 
 // 1.通过action发起数据请求
 const systemUserStore = useSystemStore()
-systemUserStore.postUsersListAction()
+fetchUserList()
 
 // 2.获取userList数据进行展示，第一次会获取空值，使用computed或storeToRefs(响应式)
-const { usersList } = storeToRefs(systemUserStore)
+const { usersList, usersTotalCount } = storeToRefs(systemUserStore)
+
+/**
+ * @description 处理页码发生改变的监听
+ */
+function handleSizeChange() {
+  fetchUserList()
+}
+
+/**
+ * @description 处理当前页面改变的监听
+ */
+function handleCurrentChange() {
+  fetchUserList()
+}
+
+/**
+ * @description 获取网络请求的函数
+ */
+function fetchUserList() {
+  // 1.获取offset和size
+  const size = pageSize.value
+  // 2.获取每次的偏移量*10 1：0 2：10
+  const offset = (currentPage.value - 1) * 10
+  const info = { size, offset }
+  systemUserStore.postUsersListAction(info)
+}
 </script>
 
 <style lang="less" scoped>
@@ -78,6 +121,12 @@ const { usersList } = storeToRefs(systemUserStore)
 
   .userList {
     width: 100%;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px 10px 20px 0;
   }
 }
 </style>
