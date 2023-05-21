@@ -86,7 +86,7 @@ function resetInput() {
   // 1.form中的数据全部重置
   formRef.value?.resetFields()
 
-  // 2.事件传递出去，content中重新发送网络请求
+  // 2.事件传递出去，在content中重新发送网络请求
   emit('resetInput')
 }
 </script>

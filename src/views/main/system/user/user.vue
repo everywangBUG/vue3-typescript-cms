@@ -1,13 +1,15 @@
 <template>
   <div class="user">
     <UserSearch @query-select="handleQuerySelect" @reset-input="handleResetInput"/>
-    <UserContent ref="contentRef"/>
+    <UserContent ref="contentRef" @create-newuser="handleCreateNewUser"/>
+    <UserModal ref="modalRef" />
   </div>
 </template>
 
 <script setup lang="ts">
 import UserSearch from './c-cpns/user-search.vue'
 import UserContent from './c-cpns/user-content.vue'
+import UserModal from './c-cpns/user-modal.vue'
 import { ref } from 'vue';
 
 /**
@@ -26,6 +28,14 @@ function handleQuerySelect(formData: any) {
  */
 function handleResetInput() {
   contentRef.value?.fetchUserList()
+}
+
+/**
+ * @description 处理user-modal中事件
+ */
+const modalRef = ref<InstanceType<typeof UserModal>>()
+function handleCreateNewUser() {  
+  modalRef.value?.setDialogVisible()
 }
 </script>
 

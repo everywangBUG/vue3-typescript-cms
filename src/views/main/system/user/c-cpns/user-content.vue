@@ -3,9 +3,9 @@
     <div class="content">
       <div class="header">
         <h2>用户列表</h2>
-        <el-button type="primary">新建数据</el-button>
+        <el-button type="primary" @click="handleCreateNewUser">新建用户</el-button>
       </div>
-      <div class="userList">
+      <div class="user-list">
         <el-table border :data="usersList" style="width: 100%">
           <el-table-column type="selection" width="50px" align="center" />
           <el-table-column type="index" label="序号" width="80px" align="center" />
@@ -82,6 +82,7 @@ import { ref } from 'vue'
 const currentPage = ref(1)
 const pageSize = ref(10)
 const small = ref(true)
+const emit = defineEmits(['createNewuser'])
 
 // 1.通过action发起数据请求
 const systemUserStore = useSystemStore()
@@ -124,8 +125,14 @@ function fetchUserList(formData: any = {}) { // 需要给一个默认的值防�
  * @description 处理删除点击事件
  */
 function handleDeleteClick(id: number) {
-  console.log('删除', id)
   systemUserStore.deleteUserListByIdAction(id)
+}
+
+/**
+ * @description 新建用户
+ */
+function handleCreateNewUser() {
+  emit('createNewuser')
 }
 
 // 将网络请求的方法暴露出去
@@ -143,7 +150,7 @@ defineExpose({ fetchUserList })
     padding: 0 0 20px 0;
   }
 
-  .userList {
+  .user-list {
     width: 100%;
   }
 
