@@ -97,15 +97,24 @@ function handleCurrentChange() {
 
 /**
  * @description 获取网络请求的函数
+ * @param {object} formData
  */
-function fetchUserList() {
+function fetchUserList(formData: any = {}) { // 需要给一个默认的值防止上面函数报错
   // 1.获取offset和size
   const size = pageSize.value
   // 2.获取每次的偏移量*10 1：0 2：10
-  const offset = (currentPage.value - 1) * 10
+  const offset = (currentPage.value - 1) * size
   const info = { size, offset }
-  systemUserStore.postUsersListAction(info)
+  const name = formData
+  const queryInfo = { ...info, ...formData }
+  console.log("fromData", formData);
+  console.log("queryInfo", queryInfo);
+  // 3.把offset size和search框中的数据一起传入网络请求函数
+  systemUserStore.postUsersListAction(queryInfo)
 }
+
+// 将网络请求的方法暴露出去
+defineExpose({ fetchUserList })
 </script>
 
 <style lang="less" scoped>

@@ -11,7 +11,27 @@ class MyRequest {
     this.instance = axios.create(config)
 
     //保存基本信息
-    this.interceptors = config.interceptors
+    // this.interceptors = config.interceptors
+
+    //每个instance添加response和request拦截器： loading/token/修改配置
+    this.instance.interceptors.request.use(
+      (config) => {
+        config.headers['Content-Type'] = 'application/json;charset=utf-8'
+        return config
+      },
+      (err: any) => {
+        return err
+      }
+    )
+
+    this.instance.interceptors.response.use(
+      (res) => {
+        return res
+      },
+      (err: any) => {
+        return err
+      }
+    )
 
     //针对特定的myRequest实例添加拦截器
     this.instance.interceptors.request.use(
@@ -22,34 +42,16 @@ class MyRequest {
       config.interceptors?.responseSuccessFn,
       config.interceptors?.responseFailureFn
     )
-
-    //每个instance添加response和request拦截器： loading/token/修改配置
-    this.instance.interceptors.response.use(
-      (res) => {
-        return res
-      },
-      (err: any) => {
-        return err
-      }
-    )
-    this.instance.interceptors.request.use(
-      (res) => {
-        return res
-      },
-      (err: any) => {
-        return err
-      }
-    )
   }
 
   request<T = any>(config: MyRequestConfig<T>): Promise<T> {
+    //单个请求config的处理
+    if (config.interceptors?.requestSuccessFn) {
+      config = config.interceptors.requestSuccessFn(config)
+    }
+
     //返回Promise
     return new Promise<T>((resolve, reject) => {
-      //单个请求config的处理
-      if (config.interceptors?.requestSuccessFn) {
-        config = config.interceptors.requestSuccessFn(config)
-      }
-
       this.instance
         .request<any, T>(config)
         .then((res) => {
@@ -59,26 +61,26 @@ class MyRequest {
           }
           resolve(res)
         })
-        .catch((err) => {
+        .catch((err: any) => {
           reject(err)
         })
     })
   }
 
   get<T = any>(config: MyRequestConfig<T>) {
-    return this.request({ ...config, method: 'get' })
+    return this.request({ ...config, method: 'GET' })
   }
 
   post<T = any>(config: MyRequestConfig<T>) {
-    return this.request({ ...config, method: 'post' })
+    return this.request({ ...config, method: 'POST' })
   }
 
   delete<T = any>(config: MyRequestConfig<T>) {
-    return this.request({ ...config, method: 'delete' })
+    return this.request({ ...config, method: 'DELETE' })
   }
 
   patch<T = any>(config: MyRequestConfig<T>) {
-    return this.request({ ...config, method: 'patch' })
+    return this.request({ ...config, method: 'PATCH' })
   }
 }
 

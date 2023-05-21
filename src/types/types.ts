@@ -3,7 +3,7 @@ export interface IUserList {
   name: string
   realname: string
   cellphone: number
-  enable: number
+  enable: string
   departmentId: number
   roleId: number
   createAt: string

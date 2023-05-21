@@ -1,4 +1,4 @@
-import type { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
+import type { InternalAxiosRequestConfig, AxiosResponse } from 'axios'
 
 export interface MyInterceptors<T = AxiosResponse> {
   requestSuccessFn?: (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig
@@ -8,6 +8,6 @@ export interface MyInterceptors<T = AxiosResponse> {
 }
 
 //对于AxiosRequestConfig配置进行拓展
-export interface MyRequestConfig<T = AxiosResponse> extends AxiosRequestConfig {
+export interface MyRequestConfig<T = AxiosResponse> extends InternalAxiosRequestConfig {
   interceptors?: MyInterceptors<T>
 }

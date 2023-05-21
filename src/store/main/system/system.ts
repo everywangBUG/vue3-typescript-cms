@@ -14,7 +14,6 @@ const useSystemStore = defineStore('system', {
       const { totalCount, list } = systemUserRes.data.data
       this.usersTotalCount = totalCount
       this.usersList = list
-      console.log(systemUserRes.data.data)
     }
   }
 })

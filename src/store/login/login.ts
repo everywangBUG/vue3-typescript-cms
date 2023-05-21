@@ -23,7 +23,6 @@ const useLoginStore = defineStore('login', {
     async loginAccountAction(account: IAccount) {
       const loginResult = await accountLogin(account)
       // 1.帐号登录，获取token的信息，把token结果保存到state中
-      // console.log(loginResult)
       const id = loginResult.data.data.id
       this.token = loginResult.data.data.token
 

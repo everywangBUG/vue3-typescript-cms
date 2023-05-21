@@ -56,22 +56,26 @@
 import { reactive, ref } from 'vue'
 import { ElForm } from 'element-plus'
 
+// 定义form的数据 
+const formRef = ref<InstanceType<typeof ElForm>>()
 const searchForm = reactive({
   name: '',
   realName: '',
   phone: '',
-  enable: 1,
-  ceateAt: []
+  enable: "",
+  ceateAt: ''
 })
 
-const formRef = ref<InstanceType<typeof ElForm>>()
+// 自定义事件
+const emit = defineEmits(['querySelect', 'resetInput'])
 
 /**
  * @description 查询功能的实现
  * @returns
  */
 function handleQueryClick() {
-  console.log('查询')
+  // 发送querySelect
+  emit('querySelect', searchForm)
 }
 
 /**
@@ -79,7 +83,11 @@ function handleQueryClick() {
  * @returns
  */
 function resetInput() {
+  // 1.form中的数据全部重置
   formRef.value?.resetFields()
+
+  // 2.事件传递出去，content中重新发送网络请求
+  emit('resetInput')
 }
 </script>
 
