@@ -16,7 +16,6 @@ class MyRequest {
     //每个instance添加response和request拦截器： loading/token/修改配置
     this.instance.interceptors.request.use(
       (config) => {
-        config.headers['Content-Type'] = 'application/json;charset=utf-8'
         return config
       },
       (err: any) => {

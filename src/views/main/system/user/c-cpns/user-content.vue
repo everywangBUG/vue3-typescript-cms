@@ -43,8 +43,17 @@
             </template>
           </el-table-column>
           <el-table-column label="操作" align="center">
-            <el-button size="small" text type="primary" icon="Edit">编辑</el-button>
-            <el-button size="small" text type="danger" icon="Delete">删除</el-button>
+            <template #default="scope">
+              <el-button size="small" text type="primary" icon="Edit">编辑</el-button>
+              <el-button 
+                size="small" 
+                text type="danger" 
+                icon="Delete" 
+                @click="handleDeleteClick(scope.row.id)"
+              >
+              删除
+            </el-button>
+            </template>
           </el-table-column>
         </el-table>
       </div>
@@ -107,10 +116,16 @@ function fetchUserList(formData: any = {}) { // 需要给一个默认的值防�
   const info = { size, offset }
   const name = formData
   const queryInfo = { ...info, ...formData }
-  console.log("fromData", formData);
-  console.log("queryInfo", queryInfo);
   // 3.把offset size和search框中的数据一起传入网络请求函数
   systemUserStore.postUsersListAction(queryInfo)
+}
+
+/**
+ * @description 处理删除点击事件
+ */
+function handleDeleteClick(id: number) {
+  console.log('删除', id)
+  systemUserStore.deleteUserListByIdAction(id)
 }
 
 // 将网络请求的方法暴露出去
