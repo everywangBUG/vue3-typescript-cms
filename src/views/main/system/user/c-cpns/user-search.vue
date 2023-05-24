@@ -69,19 +69,13 @@ const searchForm = reactive({
 // 自定义事件
 const emit = defineEmits(['querySelect', 'resetInput'])
 
-/**
- * @description 查询功能的实现
- * @returns
- */
+// 查询功能的实现
 function handleQueryClick() {
   // 发送querySelect
   emit('querySelect', searchForm)
 }
 
-/**
- * @description 重置按钮的实现
- * @returns
- */
+// 重置按钮的实现
 function resetInput() {
   // 1.form中的数据全部重置
   formRef.value?.resetFields()

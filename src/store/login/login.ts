@@ -4,6 +4,7 @@ import { accountLogin, menusInfoById, userInfoById } from '@/service/login/login
 import type { IAccount } from '@/types/login'
 import { localCache } from '@/utils/cache'
 import { defineStore } from 'pinia'
+import useMainStore from '../main/main'
 
 // 指定箭头函数的类型
 interface ILoginState {
@@ -34,21 +35,21 @@ const useLoginStore = defineStore('login', {
       const userInfo = userInfoRes.data.data
       this.userInfo = userInfo
       localCache.setCache(USER_INFO, userInfo)
-      // console.log('userInfoRes:', userInfoRes.data.data)
-      // console.log('userInfoRole', this.userInfo.role)
 
       // 4.根据用户角色权限动态获取菜单信息，将菜单信息存到state和浏览器内存中
       const menusInfoRes = await menusInfoById(this.userInfo.role.id)
       const menusInfo = menusInfoRes.data.data
       this.menuInfo = menusInfo
       localCache.setCache(MENUS_INFO, menusInfo)
-      // console.log('menus:', menusInfoRes)
-      // console.log('menuInfo:', menusInfoRes.data.data)
 
-      // 4重点：根据菜单动态添加路由
+      // 5.请求所有的roles/departments数据，不需要缓存，请求最新的数据即可
+      const mainStore = useMainStore()
+      mainStore.fetchEntireDataAction()
+
+      // 重点：根据菜单动态添加路由
       addRoutesWithMenu(this.menuInfo)
 
-      // 5  .页面跳转到main页面
+      // 页面跳转到main页面
       router.push('/main')
     },
     // 加载本地数据
@@ -63,6 +64,11 @@ const useLoginStore = defineStore('login', {
         this.userInfo = userInfo
         this.menuInfo = menusInfo
 
+        // 请求所有的roles/departments数据，缓存下来，防止刷新时丢失数据
+        const mainStore = useMainStore()
+        mainStore.fetchEntireDataAction()
+
+        // 动态添加路由
         addRoutesWithMenu(this.menuInfo)
       }
     }

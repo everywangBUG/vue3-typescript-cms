@@ -91,24 +91,17 @@ fetchUserList()
 // 2.获取userList数据进行展示，第一次会获取空值，使用computed或storeToRefs(响应式)
 const { usersList, usersTotalCount } = storeToRefs(systemUserStore)
 
-/**
- * @description 处理页码发生改变的监听
- */
+// 处理页码发生改变的监听
 function handleSizeChange() {
   fetchUserList()
 }
 
-/**
- * @description 处理当前页面改变的监听
- */
+// 处理当前页面改变的监听
 function handleCurrentChange() {
   fetchUserList()
 }
 
-/**
- * @description 获取网络请求的函数
- * @param {object} formData
- */
+// @description 获取网络请求的函数
 function fetchUserList(formData: any = {}) { // 需要给一个默认的值防止上面函数报错
   // 1.获取offset和size
   const size = pageSize.value
@@ -121,16 +114,12 @@ function fetchUserList(formData: any = {}) { // 需要给一个默认的值防�
   systemUserStore.postUsersListAction(queryInfo)
 }
 
-/**
- * @description 处理删除点击事件
- */
+// 处理删除点击事件
 function handleDeleteClick(id: number) {
   systemUserStore.deleteUserListByIdAction(id)
 }
 
-/**
- * @description 新建用户
- */
+// 新建用户
 function handleCreateNewUser() {
   emit('createNewuser')
 }

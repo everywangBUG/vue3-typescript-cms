@@ -21,28 +21,22 @@ const currentPage = ref(1)
 const pageSize = ref(10)
 const small = ref(true)
 
-/**
- * @description 请求总数据条数
- */
+// 请求总数据条数
 const systemUserStore = useSystemStore()
 const usersTotalCount = systemUserStore.usersTotalCount
 
-/**
- * @description 处理页码发生改变的监听
- */
+// 处理页码发生改变的监听
 function handleSizeChange() {
   console.log(pageSize)
 }
-/**
- * @description 处理当前页面改变的监听
- */
+
+// 处理当前页面改变的监听
 function handleCurrentChange() {
   // 调用网络请求函数，根据pageSize和currentPage动态获取
   fetchUserList()
 }
-/**
- * @description 获取网络请求的函数
- */
+
+// 获取网络请求的函数
 function fetchUserList() {
   // 1.获取offset和size
   const size = pageSize.value
