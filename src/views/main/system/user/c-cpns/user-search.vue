@@ -89,12 +89,10 @@ function resetInput() {
 .user-search {
   background-color: #fff;
   padding: 0 20px 0 20px;
-
   .el-form-item {
     padding: 20px;
     margin-bottom: 0;
   }
-
   .btns {
     text-align: right;
     padding: 0 50px 10px 0;

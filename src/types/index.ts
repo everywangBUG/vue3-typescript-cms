@@ -1,4 +1,4 @@
 import type { IAccount } from './login'
-import type { IUserList, IUserSystemState } from '@/types/types'
+import type { IUserList, IUserSystemState, IMainState } from '@/types/types'
 
-export { IAccount, IUserList, IUserSystemState }
+export { IAccount, IUserList, IUserSystemState, IMainState }

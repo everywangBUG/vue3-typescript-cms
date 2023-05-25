@@ -44,7 +44,7 @@
           </el-table-column>
           <el-table-column label="操作" align="center">
             <template #default="scope">
-              <el-button size="small" text type="primary" icon="Edit">编辑</el-button>
+              <el-button size="small" text type="primary" icon="Edit" @click="handleEditClick">编辑</el-button>
               <el-button 
                 size="small" 
                 text type="danger" 
@@ -101,7 +101,7 @@ function handleCurrentChange() {
   fetchUserList()
 }
 
-// @description 获取网络请求的函数
+// 获取网络请求的函数
 function fetchUserList(formData: any = {}) { // 需要给一个默认的值防止上面函数报错
   // 1.获取offset和size
   const size = pageSize.value
@@ -131,18 +131,15 @@ defineExpose({ fetchUserList })
 <style lang="less" scoped>
 .content {
   padding: 20px 0 20px 0;
-
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 0 20px 0;
   }
-
   .user-list {
     width: 100%;
   }
-
   .pagination {
     display: flex;
     justify-content: flex-end;

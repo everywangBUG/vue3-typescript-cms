@@ -42,7 +42,9 @@
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button @click="dialogVisible = false" type="primary"> 确定 </el-button>
+          <el-button type="primary" @click="handleConfirmClick">
+            确定 
+          </el-button>
         </span>
       </template>
     </el-dialog>
@@ -51,6 +53,7 @@
 
 <script setup lang="ts">
 import useMainStore from '@/store/main/main'
+import useSystemStore from '@/store/main/system/system'
 import { storeToRefs } from 'pinia'
 import { reactive, ref } from 'vue'
 
@@ -63,15 +66,23 @@ const formData = reactive({
   departmentId: ''
 })
 
-const dialogVisible = ref(true)
+const dialogVisible = ref(false)
 
 // 获取用户和部门数据
 const userMainStore = useMainStore()
+const systemUserStore = useSystemStore()
 const { entireRoles, entireDepartments }  = storeToRefs(userMainStore)
 
 // 定义设置dialogVisible方法，在函数中拦截
 function setDialogVisible() {
   dialogVisible.value = true
+}
+
+// 添加用户的逻辑
+function handleConfirmClick() {
+  dialogVisible.value = false
+  // 创建新的用户
+  systemUserStore.postNewUserInfoAction(formData)
 }
 
 // 暴露属性和方法(统一暴露方法)

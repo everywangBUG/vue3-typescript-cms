@@ -1,10 +1,6 @@
 import { getEntireRoles, getEntireDepartments } from '@/service/main/main'
 import { defineStore } from 'pinia'
-
-interface IMainState {
-  entireRoles: any[]
-  entireDepartments: any[]
-}
+import type { IMainState } from '@/types'
 
 const useMainStore = defineStore('main', {
   state: (): IMainState => ({
@@ -16,8 +12,6 @@ const useMainStore = defineStore('main', {
     async fetchEntireDataAction() {
       const rolesRes = await getEntireRoles()
       const departmentsRes = await getEntireDepartments()
-      // 需要在登录网络请求的页面进行调用该action
-      console.log(rolesRes.data.data.list, departmentsRes)
 
       // 保存数据
       this.entireRoles = rolesRes.data.data.list

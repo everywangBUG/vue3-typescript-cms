@@ -14,3 +14,8 @@ export interface IUserSystemState {
   usersList: IUserList[]
   usersTotalCount: number
 }
+
+export interface IMainState {
+  entireRoles: any[]
+  entireDepartments: any[]
+}
