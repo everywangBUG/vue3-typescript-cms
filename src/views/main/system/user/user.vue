@@ -1,7 +1,7 @@
 <template>
   <div class="user">
     <UserSearch @query-select="handleQuerySelect" @reset-input="handleResetInput"/>
-    <UserContent ref="contentRef" @create-newuser="handleCreateNewUser"/>
+    <UserContent ref="contentRef" @create-newuser="handleCreateNewUser" @edit-user-info="handleEditClick"/>
     <UserModal ref="modalRef" />
   </div>
 </template>
@@ -12,10 +12,7 @@ import UserContent from './c-cpns/user-content.vue'
 import UserModal from './c-cpns/user-modal.vue'
 import { ref } from 'vue';
 
-/**
- * @description 处理user-search中的传来的数据
- * @param {object} formData
- */
+// 处理user-search中的传来的数据
 const contentRef = ref<InstanceType<typeof UserContent>>()
 // 拿到user-search中的内容formData
 function handleQuerySelect(formData: any) {
@@ -23,20 +20,22 @@ function handleQuerySelect(formData: any) {
   contentRef.value?.fetchUserList(formData)
 }
 
-/**
- * @description 处理uer-search中重置数据
- */
+// 处理uer-search中重置数据
 function handleResetInput() {
   contentRef.value?.fetchUserList()
 }
 
-/**
- * @description 处理user-modal中事件
- */
+// 处理user-content中edit按钮
+function handleEditClick(rowData: any) {
+  modalRef.value?.setDialogVisible(false, rowData)
+}
+
+// 处理user-modal中事件
 const modalRef = ref<InstanceType<typeof UserModal>>()
-function handleCreateNewUser() {  
+function handleCreateNewUser() {
   modalRef.value?.setDialogVisible()
 }
+
 </script>
 
 <style lang="less" scoped>

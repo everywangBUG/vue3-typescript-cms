@@ -19,3 +19,10 @@ export function postNewUserInfo(userInfo: any) {
     data: userInfo
   })
 }
+
+export function editUserInfo(id: number, userInfo: any) {
+  return myRequest.patch({
+    url: `/users/${id}`,
+    data: userInfo
+  })
+}
