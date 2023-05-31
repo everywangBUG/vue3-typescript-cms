@@ -4,7 +4,7 @@
 
 //第二种方式：依赖当前的环境：development/production，依据vite默认配置生产环境和开发环境
 export let BASE_URL = ''
-export let HEADERS = ''
+export const HEADERS = ''
 // console.log(import.meta.env.PROD) // 生产环境
 // console.log(import.meta.env.DEV) // 开发环境
 if (import.meta.env.PROD) {

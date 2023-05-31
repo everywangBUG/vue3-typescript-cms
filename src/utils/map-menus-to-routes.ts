@@ -15,7 +15,7 @@ function loadLocalRoutes() {
     eager: true
   })
   // 1.3.遍历出模块，拿到path属性
-  for (let key in files) {
+  for (const key in files) {
     const module = files[key]
     // 动态路由放在数组中
     localRoutes.push(module.default)

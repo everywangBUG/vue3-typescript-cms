@@ -61,7 +61,7 @@ function loginAction(isRmbPsw: boolean) {
       const password = formLabelAccount.password
       // 2.新建文件夹文件在专属模块发送网络请求，在service中post/get到的数据存储到piana中的store/login/login中
       // 3.登录成功后则记住密码
-      loginStore.loginAccountAction({ name, password }).then((res) => {
+      loginStore.loginAccountAction({ name, password }).then(() => {
         if (isRmbPsw) {
           localCache.setCache(CACHE_NAME, name)
           localCache.setCache(CACHE_PASSWORD, password)

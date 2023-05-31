@@ -3,33 +3,17 @@
     <el-form size="large" label-width="90px" :model="searchForm" ref="formRef">
       <el-row :gutter="100">
         <el-col :span="8">
-          <el-form-item label="用户名" prop="name">
-            <el-input v-model="searchForm.name" placeholder="请输入用户名"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item label="真实姓名" prop="realName">
-            <el-input v-model="searchForm.realName" placeholder="请输入真实姓名"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item label="手机号码" prop="phone">
-            <el-input v-model="searchForm.cellphone" placeholder="请输入手机号码"></el-input>
+          <el-form-item label="部门名称" prop="name">
+            <el-input v-model="searchForm.name" placeholder="请输入部门名称"></el-input>
           </el-form-item>
         </el-col>
 
         <el-col :span="8">
-          <el-form-item label="状态">
-            <el-select
-              placeholder="请选择查询的状态"
-              style="width: 100%"
-              v-model="searchForm.enable"
-            >
-              <el-option label="启用" :value="1" />
-              <el-option label="禁用" :value="2" />
-            </el-select>
+          <el-form-item label="部门领导" prop="leader">
+            <el-input v-model="searchForm.leader" placeholder="请输入部门领导名字"></el-input>
           </el-form-item>
         </el-col>
+
         <el-col :span="8">
           <el-form-item label="创建时间" prop="createAt">
             <el-date-picker
@@ -59,11 +43,12 @@ import { ElForm } from 'element-plus'
 // 定义form的数据 
 const formRef = ref<InstanceType<typeof ElForm>>()
 const searchForm = reactive({
+  id: '',
   name: '',
-  realName: '',
-  cellphone: '',
-  enable: '',
-  createAt: ''
+  parentId: '',
+  createAt: '',
+  updatedAt: '',
+  leader: ''
 })
 
 // 自定义事件l

@@ -26,3 +26,17 @@ export function editUserInfo(id: number, userInfo: any) {
     data: userInfo
   })
 }
+
+/** 页面的增删改查 */
+export function postPageListData(pageName: string, queryInfo: any) {
+  return myRequest.post({
+    url: `/${pageName}/list`,
+    data: queryInfo
+  })
+}
+
+export function deletePageListById(pageName: string, id: number) {
+  return myRequest.delete({
+    url: `/${pageName}/${id}`
+  })
+}

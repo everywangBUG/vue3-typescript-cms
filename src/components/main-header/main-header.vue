@@ -15,11 +15,9 @@
 <script setup lang="ts">
 import HeaderCrumb from './c-cpns/header-crumb.vue'
 import HeaderInfo from './c-cpns/header-info.vue'
-import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 
 let isFold = ref<boolean>(false)
-const router = useRouter()
 
 // 子组件定义自定义事件
 const emit = defineEmits(['foldChange'])

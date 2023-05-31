@@ -2,7 +2,7 @@
   <div class="modal">
     <el-dialog v-model="dialogVisible" :title="isCreateNewUserRef ? '新建用户' : '编辑用户'" width="30%" center>
       <div class="newuser-form">
-        <el-form :model="formData" label-widt="100px" align-center labelPosition="left">
+        <el-form :model="formData" label-width="100px" align-center labelPosition="left">
           <el-form-item label="用户名" prop="name">
             <el-input placeholder="请输入用户名" v-model="formData.name" />
           </el-form-item>
@@ -112,11 +112,11 @@ defineExpose({ setDialogVisible })
   .newuser-form {
     padding: 0 80px;
 
-    .el-form {
+    :deep(.el-form) {
       .el-form-item {
-        .el-form--label-left .el-form-item__label {
-          justify-content: flex-end !important;
-          width: 80px !important;
+        .el-form-item__label {
+          justify-content: flex-end;
+          width: 80px;
         }
       }
     }

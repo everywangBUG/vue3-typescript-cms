@@ -10,9 +10,12 @@ export interface IUserList {
   updateAt: string
 }
 
-export interface IUserSystemState {
+export interface ISystemState {
   usersList: IUserList[]
   usersTotalCount: number
+
+  pageList: any[]
+  pageTotalCount: number
 }
 
 export interface IMainState {
