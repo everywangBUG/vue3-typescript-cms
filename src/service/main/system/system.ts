@@ -40,3 +40,17 @@ export function deletePageListById(pageName: string, id: number) {
     url: `/${pageName}/${id}`
   })
 }
+
+export function postNewPageInfo(pageName: string, pageInfo: string) {
+  return myRequest.post({
+    url: `/${pageName}`,
+    data: pageInfo
+  })
+}
+
+export function editPageInfo(pageName: string, id: number, pageInfo: any) {
+  return myRequest.patch({
+    url: `/${pageName}/${id}`,
+    data: pageInfo
+  })
+}

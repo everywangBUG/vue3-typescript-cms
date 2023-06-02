@@ -81,7 +81,7 @@ import { ref } from 'vue'
 const currentPage = ref(1)
 const pageSize = ref(10)
 const small = ref(true)
-const emit = defineEmits(['createNewuser', 'editUserInfo'])
+const emit = defineEmits(['createNewDepartment', 'editDepartmentInfo'])
 
 // 1.通过action发起数据请求
 const systemUserStore = useSystemStore()
@@ -119,12 +119,12 @@ function handleDeleteClick(id: number) {
 
 // 新建部门
 function handleCreateNewUser() {
-  emit('createNewuser')
+  emit('createNewDepartment')
 }
 
 // 编辑部门
 function handleEditClick(rowData: any) {
-  emit("editUserInfo", rowData)
+  emit("editDepartmentInfo", rowData)
 }
 
 // 将网络请求的方法暴露出去 

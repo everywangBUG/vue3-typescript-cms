@@ -26,12 +26,12 @@ function handleResetInput() {
 }
 
 // 处理user-content中edit按钮
+const modalRef = ref<InstanceType<typeof UserModal>>()
 function handleEditClick(rowData: any) {
   modalRef.value?.setDialogVisible(false, rowData)
 }
 
 // 处理user-modal中事件
-const modalRef = ref<InstanceType<typeof UserModal>>()
 function handleCreateNewUser() {
   modalRef.value?.setDialogVisible()
 }

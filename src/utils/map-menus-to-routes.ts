@@ -20,7 +20,6 @@ function loadLocalRoutes() {
     // 动态路由放在数组中
     localRoutes.push(module.default)
   }
-  // console.log('localRoutes:', localRoutes)
   return localRoutes
 }
 

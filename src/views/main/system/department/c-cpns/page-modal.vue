@@ -1,31 +1,18 @@
 <template>
   <div class="modal">
-    <el-dialog v-model="dialogVisible" :title="isCreateNewUserRef ? '新建用户' : '编辑用户'" width="30%" center>
-      <div class="newuser-form">
+    <el-dialog v-model="dialogVisible" :title="isCreateNewUserRef ? '新建部门' : '编辑部门'" width="30%" center>
+      <div class="newdepartment-form">
         <el-form :model="formData" label-width="100px" align-center labelPosition="left">
-          <el-form-item label="用户名" prop="name">
-            <el-input placeholder="请输入用户名" v-model="formData.name" />
+          <el-form-item label="部门名称" prop="name">
+            <el-input placeholder="请输入部门名称" v-model="formData.name" />
           </el-form-item>
-          <el-form-item label="真实姓名" prop="realname">
-            <el-input placeholder="请输入真实姓名" v-model="formData.realname" />
+          <el-form-item label="部门领导" prop="leader">
+            <el-input placeholder="请输入部门领导名字" v-model="formData.leader" />
           </el-form-item>
-          <el-form-item label="密码" prop="password" v-if="isCreateNewUserRef">
-            <el-input placeholder="请输入密码" type="password" v-model="formData.password" />
-          </el-form-item>
-          <el-form-item label="电话号码" prop="cellphone">
-            <el-input placeholder="请输入电话号码" v-model="formData.cellphone" />
-          </el-form-item>
-          <el-form-item label="选择角色" prop="roleId">
-            <el-select placeholder="请选择角色" v-model="formData.roleId" style="width: 100%">
-              <template v-for="item of entireRoles" :key="item.id">
-                <el-option :label="item.name" :value="item.id"></el-option>
-              </template>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="选择部门" prop="departmentId">
-            <el-select placeholder="请选择部门" v-model="formData.departmentId" style="width: 100%">
-              <template v-for="item of entireDepartments" :key="item.id">
-                <el-option :label="item.name" :value="item.id"></el-option>
+          <el-form-item label="选择部门" prop="parentId">
+            <el-select placeholder="请选择上级部门" v-model="formData.parentId" style="width: 100%">
+              <template v-for="item of entireDepartments" :key="item.parentId">
+                <el-option :label="item.name" :value="item.parentId"></el-option>
               </template>
             </el-select>
           </el-form-item>
@@ -51,11 +38,8 @@ import { reactive, ref } from 'vue'
 
 const formData = reactive<any>({
   name: '',
-  realname: '',
-  password: '',
-  cellphone: '',
-  roleId: '',
-  departmentId: ''
+  leader: '',
+  parentId: ''
 })
 
 const dialogVisible = ref(false)
@@ -66,24 +50,23 @@ const editData = ref()
 // 获取用户和部门数据
 const userMainStore = useMainStore()
 const systemUserStore = useSystemStore()
-const { entireRoles, entireDepartments } = storeToRefs(userMainStore)
+const { entireDepartments } = storeToRefs(userMainStore)
 
-// 定义设置dialogVisible方法，在函数中拦截，false表示编辑用户，true表示新建用户
+// 定义设置dialogVisible方法，在函数中拦截，false表示编辑，true表示新建
 function setDialogVisible(isCreateNewUser: boolean = true, rowData?: any) {
   // 新建用户时显示modal框
   dialogVisible.value = true
-  // 编辑用户时把user-content中的用户信息填充进去
+  // 编辑时把content中的信息填充进去
   if (!isCreateNewUser && rowData) {
-    // 编辑用户不显示password
     isCreateNewUserRef.value = false
     for (const key in formData) {
       formData[key] = rowData[key]
     }
     editData.value = rowData
   } else {
-    // 新建用户时
+    // 新建时
     isCreateNewUserRef.value = true
-    // 新建用户时清空modal中的数据
+    // 新建时清空modal中的数据
     for (const key in formData) {
       formData[key] = ''
     }
@@ -92,15 +75,16 @@ function setDialogVisible(isCreateNewUser: boolean = true, rowData?: any) {
   }
 }
 
-// 添加用户的逻辑
+// 添加部门的逻辑
 function handleConfirmClick() {
   dialogVisible.value = false
   // 不是isCreatedNewUser，编辑用户
   if (!isCreateNewUserRef.value && editData.value ) {
     // 此处的id获取是定义的获取到某一行数据的id
-    systemUserStore.editUserInfoAction(editData.value.id , formData)
+    systemUserStore.editPageInfoAction('department', editData.value.id , formData)
   } else {
-    systemUserStore.postNewUserInfoAction(formData)
+    // 创建新部门
+    systemUserStore.postNewPageInfoAction('department', formData)
   }
 }
 
@@ -109,7 +93,7 @@ defineExpose({ setDialogVisible })
 </script>
 <style lang="less" scoped>
 .modal {
-  .newuser-form {
+  .newdepartment-form {
     padding: 0 80px;
 
     :deep(.el-form) {

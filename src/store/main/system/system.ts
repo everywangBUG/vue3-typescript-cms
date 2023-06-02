@@ -1,7 +1,9 @@
 import {
   deletePageListById,
   deleteUserListById,
+  editPageInfo,
   editUserInfo,
+  postNewPageInfo,
   postNewUserInfo,
   postPageListData,
   postUserListData
@@ -56,6 +58,19 @@ const useSystemStore = defineStore('system', {
     // 根据id删除页面的数据
     async deletePageListByIdAction(pageName: string, id: number) {
       const deleteRes = await deletePageListById(pageName, id)
+      this.postPageListAction(pageName, { offset: 0, size: 10 })
+    },
+
+    // 根据页面新建数据
+    async postNewPageInfoAction(pageName: string, pageInfo: any) {
+      const newPageRes = await postNewPageInfo(pageName, pageInfo)
+      console.log(newPageRes)
+      this.postPageListAction(pageName, { offset: 0, size: 10 })
+    },
+
+    // 根据页面编辑数据
+    async editPageInfoAction(pageName: string, id: number, queryInfo: any) {
+      const editRes = await editPageInfo(pageName, id, queryInfo)
       this.postPageListAction(pageName, { offset: 0, size: 10 })
     }
   }
