@@ -4,12 +4,12 @@
       <el-row :gutter="100">
         <template v-for="item in searchConfig.formItems" :key="item.prop">
           <el-col :span="8">
-            <el-form-item :label="item.label" :props="item.prop">
+            <el-form-item :label="item.label" :prop="item.prop">
               <!-- 第一种情况，使用动态组件 -->
               <!-- <component :is="`'el-'+${item.type}`"></component> -->
               <!-- 第二种情况，使用template -->
               <template v-if="item.type === 'input'">
-                <el-input 
+                <el-input
                   v-model="searchForm[item.prop]"
                   :placeholder="item.placeholder" 
                 />
@@ -24,6 +24,17 @@
                   end-placeholder="结束日期"
                   size="large"
                 />
+              </template>
+              <template v-if="item.type === 'select'">
+                <el-select
+                  v-model="searchForm[item.prop]"
+                  :placeholder="item.placeholder"
+                  style="width: 100%"
+                >
+                  <template v-for="option in item.options" :key="option.value">
+                    <el-option :label="option.label" :value="option.value"></el-option>
+                  </template>
+                </el-select>
               </template>
             </el-form-item>
           </el-col>
@@ -41,23 +52,21 @@
 import { reactive, ref } from 'vue'
 import { ElForm } from 'element-plus'
 
-const formRef = ref<InstanceType<typeof ElForm>>()
-  
-  // 自定义事件和接受的属性
-  interface IProps {
-    searchConfig: {
-      formItems: any[]
-    }
+// 自定义事件和接受的属性
+interface IProps {
+  searchConfig: {
+    formItems: any[]
   }
-  const emit = defineEmits(['querySelect', 'resetInput'])
-  const props = defineProps<IProps>()
-  
-  // 使用search.config.ts对象初始化定义form的数据
-  const initialForm: any = {}
-  for(const item of props.searchConfig.formItems) {
-    initialForm[item.prop] = item.initialValue ?? ''
-  }
-  const searchForm = reactive(initialForm)
+}
+const emit = defineEmits(['querySelect', 'resetInput'])
+const props = defineProps<IProps>()
+
+// 使用search.config.ts对象初始化定义form的数据
+const initialForm: any = {}
+for(const item of props.searchConfig.formItems) {
+  initialForm[item.prop] = item.initialValue ?? ''
+}
+const searchForm = reactive(initialForm)
   
 // 查询功能的实现
 function handleQueryClick() {
@@ -65,7 +74,8 @@ function handleQueryClick() {
   emit('querySelect', searchForm)
 }
 
-// 重置按钮的实现
+// 重置功能的实现
+const formRef = ref<InstanceType<typeof ElForm>>()
 function resetInput() {
   // 1.form中的数据全部重置
   formRef.value?.resetFields()

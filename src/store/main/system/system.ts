@@ -64,7 +64,6 @@ const useSystemStore = defineStore('system', {
     // 根据页面新建数据
     async postNewPageInfoAction(pageName: string, pageInfo: any) {
       const newPageRes = await postNewPageInfo(pageName, pageInfo)
-      console.log(newPageRes)
       this.postPageListAction(pageName, { offset: 0, size: 10 })
     },
 

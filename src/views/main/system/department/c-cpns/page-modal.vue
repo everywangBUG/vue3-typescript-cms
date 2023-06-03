@@ -51,6 +51,7 @@ const editData = ref()
 const userMainStore = useMainStore()
 const systemUserStore = useSystemStore()
 const { entireDepartments } = storeToRefs(userMainStore)
+console.log('1111111', entireDepartments);
 
 // 定义设置dialogVisible方法，在函数中拦截，false表示编辑，true表示新建
 function setDialogVisible(isCreateNewUser: boolean = true, rowData?: any) {

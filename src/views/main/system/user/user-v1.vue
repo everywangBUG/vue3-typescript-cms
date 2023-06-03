@@ -1,22 +1,16 @@
 <template>
   <div class="user">
-    <PageSearch
-      :search-config="searchConfig"
-      @query-select="handleQuerySelect"
-      @reset-input="handleResetInput"
-    />
+    <UserSearch @query-select="handleQuerySelect" @reset-input="handleResetInput"/>
     <UserContent ref="contentRef" @create-newuser="handleCreateNewUser" @edit-user-info="handleEditClick"/>
     <UserModal ref="modalRef" />
   </div>
 </template>
 
-<script setup lang="ts" name="user">
-import PageSearch from '@/components/page-search/page-search.vue'
+<script setup lang="ts">
+import UserSearch from './c-cpns/user-search.vue'
 import UserContent from './c-cpns/user-content.vue'
 import UserModal from './c-cpns/user-modal.vue'
-import { ref } from 'vue'
-
-import searchConfig from './config/search.config'
+import { ref } from 'vue';
 
 // 处理user-search中的传来的数据
 const contentRef = ref<InstanceType<typeof UserContent>>()
