@@ -85,6 +85,7 @@ import { ref } from 'vue'
 
 interface IProps {
   contentConfig: {
+    pageName: string
     header?: {
       title: string
       btnTitle: string
@@ -126,12 +127,12 @@ function fetchPageList(formData: any = {}) { // 需要给一个默认的值防�
   const info = { size, offset }
   const queryInfo = { ...info, ...formData }
   // 3.把offset size和search框中的数据一起传入网络请求函数
-  systemUserStore.postPageListAction('department', queryInfo)
+  systemUserStore.postPageListAction(props.contentConfig.pageName, queryInfo)
 }
 
 // 处理删除点击事件
 function handleDeleteClick(id: number) {
-  systemUserStore.deletePageListByIdAction('department', id)
+  systemUserStore.deletePageListByIdAction(props.contentConfig.pageName, id)
 }
 
 // 新建部门

@@ -11,7 +11,7 @@
       @create-new-department="handleNewClick"
       @edit-department-info="handleEditClick" 
     >
-      <!-- 具名插槽 -->
+      <!-- 具名插槽自定义表格项 -->
       <template #leader="scope">
         <span class="leader">哈哈哈{{scope.row.leader}}</span>
       </template>
@@ -19,7 +19,8 @@
         <span class="name">呵呵呵呵{{scope.row[scope.prop]}}</span>
       </template>
     </PageContent>
-    <PageModal 
+    <PageModal
+      :modal-config="modalConfigRef"
       ref="modalRef"
     />
   </div>
@@ -28,11 +29,27 @@
 <script setup lang="ts" name="department">
 import PageSearch from '@/components/page-search/page-search.vue'
 import PageContent from '@/components/page-content/page-content.vue'
-import PageModal from './c-cpns/page-modal.vue'
-import { ref } from 'vue'
+import PageModal from '@/components/page-modal/page-modal.vue'
+import { computed, ref } from 'vue'
+import useMainStore from '@/store/main/main'
 
 import searchConfig from './config/search.config'
 import contentConfig from './config/content.config'
+import modalConfig from './config/modal.config'
+
+// 对modal-config.ts操作动态加入option属性，使用计算属性
+const modalConfigRef = computed(() => {
+  const mainStore = useMainStore()
+  const departments = mainStore.entireDepartments.map((item) => {
+    return { label: item.name, value: item.id }
+  })
+  modalConfig.propList.forEach(item => {
+    if(item.prop === 'parentId') {
+      item.options.push(...departments)
+    }
+  });
+  return modalConfig
+})
 
 const contentRef = ref<InstanceType<typeof PageContent>>()
 // 查询按钮请求查询的数据
