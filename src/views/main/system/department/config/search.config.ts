@@ -1,4 +1,4 @@
-// 配置需要显示的表单
+// 配置需要显示的表单表头
 const searchConfig = {
   formItems: [
     {

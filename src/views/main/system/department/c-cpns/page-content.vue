@@ -19,7 +19,7 @@
               {{ scope.row.leader }}
             </template>
           </el-table-column>
-          <el-table-column width="180" prop="name" label="上级部门" align="center">
+          <el-table-column width="180" prop="parentId" label="上级部门" align="center">
             <template #default="scope">
               {{ scope.row.parentId }}
             </template>
