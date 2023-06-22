@@ -15,10 +15,10 @@ const contentConfig = {
     // 第一种定制化不高的配置
     { type: 'timer', width: '200', prop: 'createAt', label: '创建时间', align: 'center' },
     { type: 'timer', width: '200', prop: 'updateAt', label: '更新时间', align: 'center' },
-    { type: 'handler', label: '操作', align: 'center' }
+    { type: 'handler', label: '操作', align: 'center' },
     // 第二种自定义高的配置
-    // { type: 'custom', prop: 'leader', label: '自定义插槽1', align: 'center', slotName: 'leader' },
-    // { type: 'custom', prop: 'name', label: '自定义插槽2', align: 'center', slotName: 'name' }
+    { type: 'custom', prop: 'leader', label: '自定义插槽1', align: 'center', slotName: 'leader' },
+    { type: 'custom', prop: 'name', label: '自定义插槽2', align: 'center', slotName: 'name' }
   ]
 }
 

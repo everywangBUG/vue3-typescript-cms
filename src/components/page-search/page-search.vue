@@ -51,13 +51,8 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { ElForm } from 'element-plus'
+import type { IProps } from '@/components/page-search/type'
 
-// 自定义事件和接受的属性
-interface IProps {
-  searchConfig: {
-    formItems: any[]
-  }
-}
 const emit = defineEmits(['querySelect', 'resetInput'])
 const props = defineProps<IProps>()
 

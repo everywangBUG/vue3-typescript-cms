@@ -1,7 +1,7 @@
 <template>
   <div class="department">
     <PageSearch @query-select="handleQueryClick" @reset-input="handleResetInput" />
-    <PageContent ref="contentRef" @create-new-department="handleNewClick" @edit-department-info="handleEditClick" />
+    <PageContent ref="contentRef" @create-new-table="handleNewClick" @edit-table-info="handleEditClick" />
     <PageModal ref="modalRef" />
   </div>
 </template>

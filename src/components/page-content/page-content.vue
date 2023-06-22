@@ -8,11 +8,11 @@
         </el-button>
       </div>
       <div class="content-list">
-        <el-table border :data="pageList" style="width: 100%">
+        <el-table border :data="pageList" style="width: 100%" v-bind="contentConfig.childrenTree">
           <template v-for="item in contentConfig.propList" :key="item.prop">
             <!-- 第一种抽离的方式 -->
             <template v-if="item.type === 'timer'">
-              <el-table-column v-bind="item" width="200">
+              <el-table-column v-bind="item">
                 <template #default="scope">
                   {{ formatUTC(scope.row[item.prop]) }}
                 </template>
@@ -26,7 +26,8 @@
                 <template #default="scope">
                   <el-button 
                     size="small" 
-                    text type="primary" 
+                    text 
+                    type="primary" 
                     icon="Edit" 
                     @click="handleEditClick(scope.row)"
                   >
@@ -34,7 +35,8 @@
                   </el-button>
                   <el-button 
                     size="small" 
-                    text type="danger" 
+                    text 
+                    type="danger" 
                     icon="Delete" 
                     @click="handleDeleteClick(scope.row.id)"
                   >
@@ -81,25 +83,15 @@
 import { storeToRefs } from 'pinia'
 import formatUTC from '@/utils/formatUTCTime'
 import useSystemStore from '@/store/main/system/system'
+import type { IProps } from '@/components/page-content/type'
 import { ref } from 'vue'
-
-interface IProps {
-  contentConfig: {
-    pageName: string
-    header?: {
-      title: string
-      btnTitle: string
-    },
-    propList: any[]
-  }
-}
 
 const props = defineProps<IProps>()
 
 const currentPage = ref(1)
 const pageSize = ref(10)
 const small = ref(true)
-const emit = defineEmits(['createNewDepartment', 'editDepartmentInfo'])
+const emit = defineEmits(['createNewTable', 'editTableInfo'])
 
 // 1.通过action发起数据请求
 const systemUserStore = useSystemStore()
@@ -107,6 +99,7 @@ fetchPageList()
 
 // 2.获取userList数据进行展示，第一次会获取空值，使用computed或storeToRefs(响应式)
 const { pageList, pageTotalCount } = storeToRefs(systemUserStore)
+console.log(pageList)
 
 // 处理页码发生改变的监听
 function handleSizeChange() {
@@ -135,14 +128,14 @@ function handleDeleteClick(id: number) {
   systemUserStore.deletePageListByIdAction(props.contentConfig.pageName, id)
 }
 
-// 新建部门
+// 新建数据
 function handleCreateNewUser() {
-  emit('createNewDepartment')
+  emit('createNewTable')
 }
 
-// 编辑部门
+// 编辑数据
 function handleEditClick(rowData: any) {
-  emit("editDepartmentInfo", rowData)
+  emit("editTableInfo", rowData)
 }
 
 // 将网络请求的方法暴露出去 

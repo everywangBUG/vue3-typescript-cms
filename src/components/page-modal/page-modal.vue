@@ -26,6 +26,9 @@
                   </template>
               </el-select>
               </template>
+              <template v-else-if="item.type === 'custom'">
+                <slot :name="item.slotName"></slot>
+              </template>
             </el-form-item>
           </template>
         </el-form>
@@ -45,16 +48,8 @@
 <script setup lang="ts">
 import useSystemStore from '@/store/main/system/system'
 import { reactive, ref } from 'vue'
-// import type { IProps } from '@/components/page-modal/type'
-export interface IProps {
-  modalConfig: {
-    header?: {
-      newTitle: string
-      editTitle: string
-    }
-    propList: any[]
-  }
-}
+// 3.3版本之前目前不支持从外部导入，3.3开始支持
+import type { IProps } from '@/components/page-modal/type'
 
 const props = defineProps<IProps>()
 

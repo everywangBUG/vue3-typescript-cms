@@ -8,12 +8,12 @@
     <PageContent
       :content-config="contentConfig"
       ref="contentRef"
-      @create-new-department="handleNewClick"
-      @edit-department-info="handleEditClick" 
-    >
+      @create-new-table="handleNewClick"
+      @edit-table-info="handleEditClick" 
+    > 
       <!-- 具名插槽自定义表格项 -->
       <template #leader="scope">
-        <span class="leader">哈哈哈{{scope.row.leader}}</span>
+        <span class="leader">哈哈哈{{scope.row.leader}}</span>·
       </template>
       <template #name="scope">
         <span class="name">呵呵呵呵{{scope.row[scope.prop]}}</span>
@@ -56,7 +56,7 @@ const contentRef = ref<InstanceType<typeof PageContent>>()
 function handleQueryClick(queryInfo: any) {
   contentRef.value?.fetchPageList(queryInfo)
 }
-
+  
 // 重置按钮重新请求数据
 function handleResetInput() {
   contentRef.value?.fetchPageList()
