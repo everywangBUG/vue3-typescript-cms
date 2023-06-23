@@ -1,9 +1,15 @@
 <template>
   <div class="role">
+    <PageSearch 
+      :search-config="searchConfig"
+      @query-select="handleQueryClick"
+      @reset-input="handleResetInput"
+    />
     <PageContent 
       :content-config="contentConfig"
-      @create-new-table="handleCreateNewRole"
-      @edit-table-info="handleEditRole"
+      ref="contentRef"
+      @create-new-table="handleNewClick"
+      @edit-table-info="handleEditClick"
     />
     <PageModal 
       :modal-config="modalConfig"
@@ -17,6 +23,7 @@
         node-key="id"
         :props="{ children: 'children', label: 'name'}"
         @check="handleCheckClick"
+        ref="treeRef"
       />
       </template>
     </PageModal>
@@ -26,32 +33,35 @@
 <script setup lang="ts">
 import PageContent from '@/components/page-content/page-content.vue'
 import PageModal from '@/components/page-modal/page-modal.vue'
+import PageSearch from '@/components/page-search/page-search.vue'
+
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import useMainStore from '@/store/main/main'
 
+import searchConfig from './config/search.config'
 import contentConfig from '@/views/main/system/role/config/content.config'
 import modalConfig from '@/views/main/system/role/config/modal.config'
-
-const modalRef = ref<InstanceType <typeof PageModal>>()
-function handleCreateNewRole() {
-  modalRef.value?.setDialogVisible()
-}
+import usePageContent from '@/hooks/usePageContent'
+import usePageModal from '@/hooks/usePageModal'
+import { ElTree } from 'element-plus'
 
 const mainUseStore = useMainStore()
 const { menuList } = storeToRefs(mainUseStore)
 
 // 新增用户
 const otherInfo = ref({})
+const treeRef = ref<InstanceType<typeof ElTree>>()
 function handleCheckClick(data1: any, data2: any) {
   const menuList = [ ...data2.checkedKeys, ...data2.halfCheckedKeys ]
   otherInfo.value = { menuList }
 }
 
-// 编辑用户
-function handleEditRole(rowData: any) {
-  modalRef.value?.setDialogVisible(false, rowData)
-}
+// 重置和查询
+const { contentRef, handleQueryClick, handleResetInput } = usePageContent()
+
+// 新建和编辑
+const { modalRef, handleNewClick, handleEditClick } = usePageModal()
 
 </script>
 

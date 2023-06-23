@@ -36,6 +36,8 @@ import useMainStore from '@/store/main/main'
 import searchConfig from './config/search.config'
 import contentConfig from './config/content.config'
 import modalConfig from './config/modal.config'
+import usePageContent from '@/hooks/usePageContent'
+import usePageModal from '@/hooks/usePageModal'
 
 // 对modal-config.ts操作动态加入option属性，使用计算属性
 const modalConfigRef = computed(() => {
@@ -51,27 +53,32 @@ const modalConfigRef = computed(() => {
   return modalConfig
 })
 
-const contentRef = ref<InstanceType<typeof PageContent>>()
-// 查询按钮请求查询的数据
-function handleQueryClick(queryInfo: any) {
-  contentRef.value?.fetchPageList(queryInfo)
-}
+const { contentRef, handleQueryClick, handleResetInput } = usePageContent()
+
+// const contentRef = ref<InstanceType<typeof PageContent>>()
+// // 查询按钮请求查询的数据
+// function handleQueryClick(queryInfo: any) {
+//   contentRef.value?.fetchPageList(queryInfo)
+// }
   
-// 重置按钮重新请求数据
-function handleResetInput() {
-  contentRef.value?.fetchPageList()
-}
+// // 重置按钮重新请求数据
+// function handleResetInput() {
+//   contentRef.value?.fetchPageList()
+// }
+
+// 使用抽取的hooks
+const { modalRef, handleNewClick, handleEditClick } = usePageModal()
 
 // 点击page-content时modal新建交互
-const modalRef = ref<InstanceType <typeof PageModal>>()
-function handleNewClick() {
-  modalRef.value?.setDialogVisible()
-}
+// const modalRef = ref<InstanceType <typeof PageModal>>()
+// function handleNewClick() {
+//   modalRef.value?.setDialogVisible()
+// }
 
-// 点击page-content时modal编辑交互
-function handleEditClick(rowData: any) {
-  modalRef.value?.setDialogVisible(false, rowData)
-}
+// // 点击page-content时modal编辑交互
+// function handleEditClick(rowData: any) {
+//   modalRef.value?.setDialogVisible(false, rowData)
+// }
 </script>
 
 <style scoped lang="less">
