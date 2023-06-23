@@ -99,7 +99,6 @@ fetchPageList()
 
 // 2.获取userList数据进行展示，第一次会获取空值，使用computed或storeToRefs(响应式)
 const { pageList, pageTotalCount } = storeToRefs(systemUserStore)
-console.log(pageList)
 
 // 处理页码发生改变的监听
 function handleSizeChange() {

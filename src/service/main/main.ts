@@ -11,3 +11,9 @@ export function getEntireDepartments() {
     url: '/department/list'
   })
 }
+
+export function getEntireMenuList() {
+  return myRequest.post({
+    url: '/menu/list'
+  })
+}

@@ -94,16 +94,20 @@ function setDialogVisible(isCreateNewUser: boolean = true, rowData?: any) {
   }
 }
 
-// 添加部门的逻辑
+// 添加新数据的逻辑
 function handleConfirmClick() {
   dialogVisible.value = false
+  let infoData = formData
+  if (props.otherInfo) {
+    infoData = { ...infoData, ...props.otherInfo }
+  }
   // 不是isCreatedNewUser，编辑用户
   if (!isCreateNewUserRef.value && editData.value ) {
     // 此处的id获取是定义的获取到某一行数据的id
-    systemUserStore.editPageInfoAction('department', editData.value.id , formData)
+    systemUserStore.editPageInfoAction(props.modalConfig.pageName, editData.value.id , infoData)
   } else {
-    // 创建新部门
-    systemUserStore.postNewPageInfoAction('department', formData)
+    // 创建新数据
+    systemUserStore.postNewPageInfoAction(props.modalConfig.pageName, infoData)
   }
 }
 
