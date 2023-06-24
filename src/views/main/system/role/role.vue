@@ -35,7 +35,7 @@ import PageContent from '@/components/page-content/page-content.vue'
 import PageModal from '@/components/page-modal/page-modal.vue'
 import PageSearch from '@/components/page-search/page-search.vue'
 
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import useMainStore from '@/store/main/main'
 
@@ -45,6 +45,8 @@ import modalConfig from '@/views/main/system/role/config/modal.config'
 import usePageContent from '@/hooks/usePageContent'
 import usePageModal from '@/hooks/usePageModal'
 import { ElTree } from 'element-plus'
+
+import { mapMenusListToId } from '@/utils/map-menus-to-routes'
 
 const mainUseStore = useMainStore()
 const { menuList } = storeToRefs(mainUseStore)
@@ -61,7 +63,15 @@ function handleCheckClick(data1: any, data2: any) {
 const { contentRef, handleQueryClick, handleResetInput } = usePageContent()
 
 // 新建和编辑
-const { modalRef, handleNewClick, handleEditClick } = usePageModal()
+const { modalRef, handleNewClick, handleEditClick } = usePageModal(editCallback)
+
+// 编辑的回调，用于解决每次点击角色权限的回显
+function editCallback(rowData) {
+  const menuIds = mapMenusListToId(rowData.menuList)
+  nextTick(() => {
+    treeRef.value?.setCheckedKeys(menuIds)
+  })
+}
 
 </script>
 

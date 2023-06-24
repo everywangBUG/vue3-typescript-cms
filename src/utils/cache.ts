@@ -4,6 +4,9 @@ enum CacheType {
   session = 'session'
 }
 
+/**
+ * @description 二次封装sessionStorage和localStorage
+ */
 class Cache {
   storage: Storage
 

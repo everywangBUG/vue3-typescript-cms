@@ -9,7 +9,7 @@ dayjs.extend(utc)
  * @param {string} format
  * @returns {string} formatTime
  */
-export default function formatUTC(UTCTime: string, format: string = 'YYYY/MM/DD HH:mm:ss') {
+export default function formatUTC(UTCTime: string, format: string = 'YYYY/MM/DD HH:mm:ss'): string {
   const formatTime = dayjs.utc(UTCTime).utcOffset(8).format(format)
   return formatTime
 }

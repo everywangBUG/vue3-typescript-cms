@@ -5,9 +5,9 @@ export let firstMenu: any = null
 
 /**
  * @description 通过路径获取所有的动态路由path放在一个数组中
- * @returns {number} localRoutes
+ * @returns {Array} localRoutes 本地的路由
  */
-function loadLocalRoutes() {
+function loadLocalRoutes() :Array<any> {
   // 1.1.定义一个数组，类型是router中的类型
   const localRoutes: RouteRecordRaw[] = []
   // 1.2.读取router/main中的所有ts文件，加载main下面的所有的ts文件，中间的两个**表示匹配main下面的所有子目录
@@ -24,11 +24,11 @@ function loadLocalRoutes() {
 }
 
 /**
- * @description 根据菜单显示匹配正确的路由
+ * @description 根据菜单显示映射正确的路由
  * @param menusInfo
- * @returns
+ * @returns {Array} 匹配到的正确的路由
  */
-export function mapMenusRoutes(menusInfo: any[]) {
+export function mapMenusRoutes(menusInfo: any[]): Array<any> {
   // 1.加载本地路由
   const localRoutes = loadLocalRoutes()
 
@@ -52,8 +52,9 @@ export function mapMenusRoutes(menusInfo: any[]) {
 
 /**
  * @description 根据路径匹配需要显示的菜单
- * @param path 需要匹配的路径
- * @param userMenu 所有的菜单
+ * @param {string} path 需要匹配的路径
+ * @param menuInfo 所有的菜单
+ * @returns {Array} subMenu 子菜单
  */
 export function mapPathToMenu(path: string, menuInfo: any[]) {
   for (const menu of menuInfo) {
@@ -74,9 +75,9 @@ interface IBreadcrumb {
  * @description 根据动态获取的路由菜单显示面包屑
  * @param path
  * @param menuInfo
- * @returns
+ * @returns {Array} 面包屑数组
  */
-export function mapPathToBreadCrumb(path: string, menuInfo: any[]) {
+export function mapPathToBreadCrumb(path: string, menuInfo: any[]): Array<any> {
   const breadcrumbs: IBreadcrumb[] = []
   for (const menu of menuInfo) {
     for (const subMenu of menu.children) {
@@ -87,4 +88,24 @@ export function mapPathToBreadCrumb(path: string, menuInfo: any[]) {
     }
   }
   return breadcrumbs
+}
+
+/**
+ * @description 根据菜单映射的为id数组
+ * @param {Array} menus 菜单数组
+ * @returns {Array} ids 菜单的id数组
+ */
+export function mapMenusListToId(menus: any[]): Array<any> {
+  const ids: number[] = []
+  function _recurseGetId(menuList: any[]) {
+    for (const menu of menuList) {
+      if (menu.children) {
+        _recurseGetId(menu.children) 
+      } else {
+        ids.push(menu.id)
+      }
+    }
+  }
+  _recurseGetId(menus)
+  return ids
 }
