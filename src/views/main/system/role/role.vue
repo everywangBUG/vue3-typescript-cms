@@ -63,16 +63,21 @@ function handleCheckClick(data1: any, data2: any) {
 const { contentRef, handleQueryClick, handleResetInput } = usePageContent()
 
 // 新建和编辑
-const { modalRef, handleNewClick, handleEditClick } = usePageModal(editCallback)
+const { modalRef, handleNewClick, handleEditClick } = usePageModal(editCallback, newCallback)
 
 // 编辑的回调，用于解决每次点击角色权限的回显
-function editCallback(rowData) {
-  const menuIds = mapMenusListToId(rowData.menuList)
+function editCallback(rowData: any) {
   nextTick(() => {
+    const menuIds = mapMenusListToId(rowData.menuList)
     treeRef.value?.setCheckedKeys(menuIds)
   })
 }
-
+// 新建的回调函数
+function newCallback() {
+  nextTick(() => {
+    treeRef.value?.setCheckedKeys([])
+  })
+}
 </script>
 
 <style lang="less" scoped>
