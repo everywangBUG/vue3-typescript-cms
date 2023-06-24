@@ -1,5 +1,6 @@
 // 配置需要显示的表单表头
 const searchConfig = {
+  pageName: 'role',
   formItems: [
     {
       type: 'input',

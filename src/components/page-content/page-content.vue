@@ -3,7 +3,7 @@
     <div class="content">
       <div class="header">
         <h2 class="title">{{contentConfig.header?.title || '数据列表'}}</h2>
-        <el-button type="primary" @click="handleCreateNewUser">
+        <el-button type="primary" @click="handleCreateNewUser" v-if="isCreate">
           {{contentConfig.header?.btnTitle || '新建数据'}}
         </el-button>
       </div>
@@ -30,6 +30,7 @@
                     type="primary" 
                     icon="Edit" 
                     @click="handleEditClick(scope.row)"
+                    v-if="isUpdate"
                   >
                   编辑
                   </el-button>
@@ -39,6 +40,7 @@
                     type="danger" 
                     icon="Delete" 
                     @click="handleDeleteClick(scope.row.id)"
+                    v-if="isDelete"
                   >
                   删除
                 </el-button>
@@ -84,6 +86,7 @@ import { storeToRefs } from 'pinia'
 import formatUTC from '@/utils/formatUTCTime'
 import useSystemStore from '@/store/main/system/system'
 import type { IProps } from '@/components/page-content/type'
+import usePermissions from '@/hooks/usePermissions'
 import { ref } from 'vue'
 
 const props = defineProps<IProps>()
@@ -92,6 +95,12 @@ const currentPage = ref(1)
 const pageSize = ref(10)
 const small = ref(true)
 const emit = defineEmits(['createNewTable', 'editTableInfo'])
+
+// 0.获取是否有增删改查的权限
+const isCreate = usePermissions(`${props.contentConfig.pageName}:create`)
+const isUpdate = usePermissions(`${props.contentConfig.pageName}:update`)
+const isDelete = usePermissions(`${props.contentConfig.pageName}:delete`)
+const isQuery = usePermissions(`${props.contentConfig.pageName}:query`)
 
 // 1.通过action发起数据请求
 const systemUserStore = useSystemStore()
@@ -112,6 +121,7 @@ function handleCurrentChange() {
 
 // 获取网络请求的函数
 function fetchPageList(formData: any = {}) { // 需要给一个默认的值防止上面函数报错
+  if(!isQuery) return 
   // 1.获取offset和size
   const size = pageSize.value
   // 2.获取每次的偏移量*10 1：0 2：10

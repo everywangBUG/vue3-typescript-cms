@@ -29,6 +29,10 @@ const router = createRouter({
   routes
 })
 
+/**
+ * @description 根据返回的菜单信息添加路由
+ * @param menusInfo
+ */
 export function addRoutesWithMenu(menusInfo: any) {
   // 获取匹配的所有路由
   const routes = mapMenusRoutes(menusInfo)

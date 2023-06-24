@@ -17,7 +17,7 @@
               </template>
               <template v-else-if="item.type === 'select'">
                 <el-select
-                  v-modal="formData[item.prop]"
+                  v-model="formData[item.prop]"
                   :placeholder="item.placeholder"
                   style="width: 100%"
                 >
@@ -101,7 +101,7 @@ function handleConfirmClick() {
   if (props.otherInfo) {
     infoData = { ...infoData, ...props.otherInfo }
   }
-  // 不是isCreatedNewUser，编辑用户
+  // 不是isCreatedNewUser，编辑数据
   if (!isCreateNewUserRef.value && editData.value ) {
     // 此处的id获取是定义的获取到某一行数据的id
     systemUserStore.editPageInfoAction(props.modalConfig.pageName, editData.value.id , infoData)

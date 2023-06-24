@@ -30,7 +30,7 @@
 import PageSearch from '@/components/page-search/page-search.vue'
 import PageContent from '@/components/page-content/page-content.vue'
 import PageModal from '@/components/page-modal/page-modal.vue'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import useMainStore from '@/store/main/main'
 
 import searchConfig from './config/search.config'

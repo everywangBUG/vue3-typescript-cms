@@ -43,7 +43,7 @@
     </el-form>
     <div class="btns">
       <el-button @click="resetInput">重置</el-button>
-      <el-button type="primary" @click="handleQueryClick">查询</el-button>
+      <el-button type="primary" @click="handleQueryClick" v-if="isQuery">查询</el-button>
     </div>
   </div>
 </template>
@@ -52,9 +52,13 @@
 import { reactive, ref } from 'vue'
 import { ElForm } from 'element-plus'
 import type { IProps } from '@/components/page-search/type'
+import usePermissions from '@/hooks/usePermissions';
 
 const emit = defineEmits(['querySelect', 'resetInput'])
 const props = defineProps<IProps>()
+
+// 判断搜索按钮的权限
+const isQuery = usePermissions(`${props.searchConfig.pageName}:query`)
 
 // 使用search.config.ts对象初始化定义form的数据
 const initialForm: any = {}

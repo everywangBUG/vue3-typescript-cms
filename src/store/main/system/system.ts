@@ -11,6 +11,7 @@ import {
 import { defineStore } from 'pinia'
 
 import type { ISystemState } from '@/types/types'
+import useMainStore from '../main'
 
 const useSystemStore = defineStore('system', {
   state: (): ISystemState => ({
@@ -47,6 +48,7 @@ const useSystemStore = defineStore('system', {
       this.postUsersListAction({ offset: 0, size: 10 })
     },
 
+    /** 所有页面通用的增删改查 */
     /** 页面请求的增删改查 */
     async postPageListAction(pageName: string, queryInfo: any) {
       const pageListRes = await postPageListData(pageName, queryInfo)
@@ -59,18 +61,28 @@ const useSystemStore = defineStore('system', {
     async deletePageListByIdAction(pageName: string, id: number) {
       const deleteRes = await deletePageListById(pageName, id)
       this.postPageListAction(pageName, { offset: 0, size: 10 })
+      // 删除数据后再次发送网络请求获取完整的数据
+      const mainStore = useMainStore()
+      mainStore.fetchEntireDataAction()
     },
 
     // 根据页面新建数据
     async postNewPageInfoAction(pageName: string, pageInfo: any) {
       const newPageRes = await postNewPageInfo(pageName, pageInfo)
+      // 重新请求新的数据
       this.postPageListAction(pageName, { offset: 0, size: 10 })
+      // 新建数据后再次发送网络请求获取完整的数据
+      const mainStore = useMainStore()
+      mainStore.fetchEntireDataAction()
     },
-
+    
     // 根据页面编辑数据
     async editPageInfoAction(pageName: string, id: number, queryInfo: any) {
       const editRes = await editPageInfo(pageName, id, queryInfo)
       this.postPageListAction(pageName, { offset: 0, size: 10 })
+      // 编辑数据后再次发送网络请求获取完整的数据
+      const mainStore = useMainStore()
+      mainStore.fetchEntireDataAction()
     }
   }
 })

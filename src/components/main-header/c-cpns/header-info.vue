@@ -9,7 +9,7 @@
       <el-dropdown>
         <span class="avatar-item">
           <el-avatar :size="30" />
-          <span class="name">coderwhy</span>
+          <span class="name">{{ userInfo?.name}}</span>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
@@ -36,6 +36,7 @@
 import { LOGIN_TOKEN, MENUS_INFO, USER_INFO } from '@/constants/login'
 import { localCache } from '@/utils/cache'
 import { useRouter } from 'vue-router'
+import useLoginStore from '@/store/login/login';
 
 const router = useRouter()
 function handleLogout() {
@@ -44,6 +45,9 @@ function handleLogout() {
   localCache.removeCache(MENUS_INFO)
   router.push('./login')
 }
+
+const loginStore = useLoginStore()
+const { userInfo } = loginStore
 </script>
 
 <style lang="less" scoped>

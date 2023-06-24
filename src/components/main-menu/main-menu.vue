@@ -67,8 +67,9 @@ const route = useRoute()
 // route.path当前点击菜单的对应的页面路径，拿到当前路径
 const defaultActive = computed(() => {
   // 当路径重新变化的时候，重新计算menu
+  // debugger
   const pathMenu = mapPathToMenu(route.path, menuInfo)
-  return pathMenu.id + ''
+  return pathMenu?.id + ''
 })
 </script>
 
@@ -100,6 +101,7 @@ const defaultActive = computed(() => {
           }
         }
         .el-menu {
+          border-right: none;
           .el-sub-menu {
             margin-right: -1px;
           }

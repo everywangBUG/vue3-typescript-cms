@@ -1,5 +1,7 @@
+export const LOGIN = 'login'
 export const LOGIN_TOKEN = 'token'
 export const CACHE_NAME = 'name'
 export const CACHE_PASSWORD = 'password'
 export const USER_INFO = 'userInfo'
 export const MENUS_INFO = 'menusInfo'
+export const PERMISSIONS = 'permissions'
