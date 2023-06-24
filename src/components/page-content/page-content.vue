@@ -119,6 +119,17 @@ function handleCurrentChange() {
   fetchPageList()
 }
 
+// pinia监听action的API，如果增删改了数据，回到第一页
+systemUserStore.$onAction(({ name }) => {
+  if (
+    name === 'editPageInfoAction' ||
+    name === 'postNewPageInfoAction' ||
+    name === 'deletePageListByIdAction'
+  ) {
+    currentPage.value = 1
+  }
+})
+
 // 获取网络请求的函数
 function fetchPageList(formData: any = {}) { // 需要给一个默认的值防止上面函数报错
   if(!isQuery) return 
