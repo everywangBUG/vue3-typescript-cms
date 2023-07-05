@@ -120,14 +120,16 @@ function handleCurrentChange() {
 }
 
 // pinia监听action的API，如果增删改了数据，回到第一页
-systemUserStore.$onAction(({ name }) => {
-  if (
-    name === 'editPageInfoAction' ||
-    name === 'postNewPageInfoAction' ||
-    name === 'deletePageListByIdAction'
-  ) {
-    currentPage.value = 1
-  }
+systemUserStore.$onAction(({ name, after }) => {
+  after(() => {
+    if (
+      name === 'editPageInfoAction' ||
+      name === 'postNewPageInfoAction' ||
+      name === 'deletePageListByIdAction'
+    ) {
+      currentPage.value = 1
+    }
+  })
 })
 
 // 获取网络请求的函数
