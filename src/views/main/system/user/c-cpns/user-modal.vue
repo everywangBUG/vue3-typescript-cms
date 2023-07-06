@@ -1,8 +1,21 @@
 <template>
   <div class="modal">
-    <el-dialog v-model="dialogVisible" :title="isCreateNewUserRef ? '新建用户' : '编辑用户'" width="30%" center>
+    <el-dialog 
+      v-model="dialogVisible"
+      :title="isCreateNewUserRef ? '新建用户' : '编辑用户'" 
+      width="30%"
+      center
+      :close-on-click-modal="false"
+    >
       <div class="newuser-form">
-        <el-form :model="formData" label-width="100px" align-center labelPosition="left">
+        <el-form 
+          :model="formData"
+          label-width="100px"
+          align-center
+          labelPosition="left"
+          ref="formDataRef"
+          :rules="rules"
+        >
           <el-form-item label="用户名" prop="name">
             <el-input placeholder="请输入用户名" v-model="formData.name" />
           </el-form-item>
@@ -34,7 +47,7 @@
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="handleConfirmClick">
+          <el-button type="primary" @click="handleConfirmClick(formDataRef)">
             确定
           </el-button>
         </span>
@@ -47,15 +60,44 @@
 import useMainStore from '@/store/main/main'
 import useSystemStore from '@/store/main/system/system'
 import { storeToRefs } from 'pinia'
-import { reactive, ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
+import type { FormRules, FormInstance } from 'element-plus'
+import type { IRuleForm } from '../types/type'
 
-const formData = reactive<any>({
+const formDataRef = ref<FormInstance>()
+const formData = reactive<IRuleForm>({
   name: '',
   realname: '',
   password: '',
   cellphone: '',
   roleId: '',
   departmentId: ''
+})
+
+const rules = reactive<FormRules>({
+  name: [
+    { required: true, message: '请输入姓名', trigger: 'blur' },
+    { min: 1, max: 10, message: '长度在 1 到 10 个字符之间', trigger: 'blur' },
+  ],
+  realname: [
+    { required: true, message: '请输入真实姓名', trigger: 'blur' },
+    { min: 1, max: 20, message: '长度在 1 到 20 个字符之间', trigger: 'blur' },
+  ],
+  password: [
+    { required: true, message: '请输入密码', trigger: 'blur' },
+    { min: 3, max: 18, message: '长度在 3 到 18 个字符之间', trigger: 'blur' },
+    { pattern: /^[a-z0-9]{3,18}$/, message: '请输入正确格式的密码', trigger: 'blur' },
+  ],
+  cellphone: [
+    { required: true, message: '请输入手机号或固定电话', trigger: 'change' },
+    { pattern: /^((0\d{2,3}-\d{7,8})|(1[34578]\d{9}))$/, message: '请输入正确格式的手机号或固定电话', trigger: 'change' },
+  ],
+  roleId: [
+    { required: true, message: '请选择角色', trigger: 'change' },
+  ],
+  departmentId: [
+    { required: true, message: '请选择部门', trigger: 'change' },
+  ]
 })
 
 const dialogVisible = ref(false)
@@ -92,17 +134,30 @@ function setDialogVisible(isCreateNewUser: boolean = true, rowData?: any) {
   }
 }
 
+
 // 添加用户的逻辑
-function handleConfirmClick() {
-  dialogVisible.value = false
-  // 不是isCreatedNewUser，编辑用户
-  if (!isCreateNewUserRef.value && editData.value ) {
-    // 此处的id获取是定义的获取到某一行数据的id
-    systemUserStore.editUserInfoAction(editData.value.id , formData)
-  } else {
-    systemUserStore.postNewUserInfoAction(formData)
-  }
+async function handleConfirmClick(formEl: FormInstance | undefined) {
+  if (!formEl) return
+  await formEl.validate((valid) => {
+    if (valid) {
+      // 编辑用户
+      if (!isCreateNewUserRef.value && editData.value) {
+        systemUserStore.editUserInfoAction(editData.value.id , formData)
+        dialogVisible.value = false
+      // 新建用户
+      } else {
+        systemUserStore.postNewUserInfoAction(formData)
+        dialogVisible.value = false
+      }
+    }
+    return false
+  })
 }
+
+// 弹框消失去除验证
+watch(dialogVisible, (val) => {
+  if (!val) formDataRef.value?.clearValidate()
+})
 
 // 暴露属性和方法(统一暴露方法)
 defineExpose({ setDialogVisible })
@@ -114,6 +169,7 @@ defineExpose({ setDialogVisible })
 
     :deep(.el-form) {
       .el-form-item {
+        justify-content: center;
         .el-form-item__label {
           justify-content: flex-end;
           width: 80px;
@@ -123,3 +179,4 @@ defineExpose({ setDialogVisible })
   }
 }
 </style>
+../types/type

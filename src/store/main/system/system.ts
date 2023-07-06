@@ -12,6 +12,7 @@ import { defineStore } from 'pinia'
 
 import type { ISystemState } from '@/types/types'
 import useMainStore from '../main'
+import { messagePop } from '@/utils/messagePop'
 
 const useSystemStore = defineStore('system', {
   state: (): ISystemState => ({
@@ -30,22 +31,41 @@ const useSystemStore = defineStore('system', {
     },
     // 根据用户id删除用户数据
     async deleteUserListByIdAction(id: number) {
-      // 删除完数据
-      const deleteRes = await deleteUserListById(id)
-      // 重新请求新的数据
-      this.postUsersListAction({ offset: 0, size: 10 })
+      try {
+        // 删除完数据
+        const deleteUserRes = await deleteUserListById(id)
+        // 重新请求新的数据
+        this.postUsersListAction({ offset: 0, size: 10 })
+        const { code, data } = deleteUserRes.data
+        messagePop(code, data)
+      } catch (err) {
+        console.log(err)
+      }
     },
     // post新增用户信息
     async postNewUserInfoAction(userInfo: object) {
-      const postUserRes = await postNewUserInfo(userInfo)
-      this.postUsersListAction({ offset: 0, size: 10 })
+      try {
+        const postNewUserInfoRes = await postNewUserInfo(userInfo)
+        this.postUsersListAction({ offset: 0, size: 10 })
+        const { code, data } = postNewUserInfoRes.data
+        messagePop(code, data)
+      } catch (err) {
+        console.log(err)
+      }
     },
     // 修改用户信息
     async editUserInfoAction(id: number, userInfo: any) {
-      // 1.更新用户信息
-      const editRes = await editUserInfo(id, userInfo)
-      // 2.重新请求数据
-      this.postUsersListAction({ offset: 0, size: 10 })
+      try {
+        // 1.更新用户信息
+        const editUserInfoRes = await editUserInfo(id, userInfo)
+        // 2.重新请求数据
+        this.postUsersListAction({ offset: 0, size: 10 })
+        // 提示语
+        const { code, data } = editUserInfoRes.data 
+        messagePop(code, data)
+      } catch (err) {
+        console.log(err)
+      }
     },
 
     /** 所有页面通用的增删改查 */
@@ -54,7 +74,7 @@ const useSystemStore = defineStore('system', {
       try {
         const pageListRes = await postPageListData(pageName, queryInfo)
         const { totalCount, list } = pageListRes.data.data
-        this.pageTotalCount = totalCount
+        this.pageTotalCount = parseInt(totalCount)
         this.pageList = list
       } catch (err) {
         console.log(err)
@@ -64,11 +84,13 @@ const useSystemStore = defineStore('system', {
     // 根据id删除页面的数据
     async deletePageListByIdAction(pageName: string, id: number) {
       try {
-        const deleteRes = await deletePageListById(pageName, id)
+        const deletePageListRes = await deletePageListById(pageName, id)
         this.postPageListAction(pageName, { offset: 0, size: 10 })
         // 删除数据后再次发送网络请求获取完整的数据
         const mainStore = useMainStore()
         mainStore.fetchEntireDataAction()
+        const { code, data } = deletePageListRes.data
+        messagePop(code, data)
       } catch (err) {
         console.log(err)
       }
@@ -77,12 +99,14 @@ const useSystemStore = defineStore('system', {
     // 根据页面新建数据
     async postNewPageInfoAction(pageName: string, pageInfo: any) {
       try {
-        const newPageRes = await postNewPageInfo(pageName, pageInfo)
+        const postNewPageInfoRes = await postNewPageInfo(pageName, pageInfo)
         // 重新请求新的数据
         this.postPageListAction(pageName, { offset: 0, size: 10 })
         // 新建数据后再次发送网络请求获取完整的数据
         const mainStore = useMainStore()
         mainStore.fetchEntireDataAction()
+        const { code, data } = postNewPageInfoRes.data
+        messagePop(code, data)
       } catch (err) {
         console.log(err)
       }
@@ -91,11 +115,13 @@ const useSystemStore = defineStore('system', {
     // 根据页面编辑数据
     async editPageInfoAction(pageName: string, id: number, queryInfo: any) {
       try {
-        const editRes = await editPageInfo(pageName, id, queryInfo)
+        const editPageInfoRes = await editPageInfo(pageName, id, queryInfo)
         this.postPageListAction(pageName, { offset: 0, size: 10 })
         // 编辑数据后再次发送网络请求获取完整的数据
         const mainStore = useMainStore()
         mainStore.fetchEntireDataAction()
+        const { code, data } = editPageInfoRes.data
+        messagePop(code, data)
       } catch (err) {
         console.log(err)
       }

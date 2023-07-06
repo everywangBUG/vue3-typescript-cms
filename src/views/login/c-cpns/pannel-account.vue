@@ -42,7 +42,7 @@ const formLabelAccount = reactive<IAccount>({
 const accountRules = reactive<FormRules>({
   name: [
     { required: true, message: '请输入用户名称', trigger: 'blur' },
-    { pattern: /^[a-z0-9]{6,20}$/, message: '用户名称在2到10个字符', trigger: 'blur' }
+    { pattern: /^[a-z0-9]{2,10}$/, message: '用户名称在2到10个字符', trigger: 'blur' }
   ],
   password: [
     { required: true, message: '必须输入密码信息', trigger: 'blur' },

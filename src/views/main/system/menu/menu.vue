@@ -6,7 +6,7 @@
       @edit-table-info="handleEditClick"
     />
     <PageModal
-    :modal-config="modalConfig"
+      :modal-config="modalConfig"
       ref="modalRef"
     />
   </div>

@@ -2,9 +2,9 @@
   <div class="content">
     <div class="content">
       <div class="header">
-        <h2 class="title">{{contentConfig.header?.title || '数据列表'}}</h2>
+        <h2 class="title">{{ contentConfig.header?.title || '数据列表' }}</h2>
         <el-button type="primary" @click="handleCreateNewUser" v-if="isCreate">
-          {{contentConfig.header?.btnTitle || '新建数据'}}
+          {{ contentConfig.header?.btnTitle || '新建数据' }}
         </el-button>
       </div>
       <div class="content-list">
@@ -32,7 +32,7 @@
                     @click="handleEditClick(scope.row)"
                     v-if="isUpdate"
                   >
-                  编辑
+                    编辑
                   </el-button>
                   <el-button 
                     size="small" 
@@ -42,8 +42,8 @@
                     @click="handleDeleteClick(scope.row.id)"
                     v-if="isDelete"
                   >
-                  删除
-                </el-button>
+                    删除
+                  </el-button>
                 </template>
               </el-table-column>
             </template>
@@ -66,16 +66,15 @@
         </el-table>
       </div>
       <div class="pagination">
-        <el-pagination
-          v-model:current-page="currentPage"
-          v-model:page-size="pageSize"
+        <el-pagination 
+          :current-page="currentPage"
+          :page-size="pageSize"
           :page-sizes="[10, 20, 30]"
           :small="small"
           layout="sizes, prev, pager, next, jumper, total"
           :total="pageTotalCount"
           @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-        />
+          @current-change="handleCurrentChange" />
       </div>
     </div>
   </div>
@@ -134,7 +133,7 @@ systemUserStore.$onAction(({ name, after }) => {
 
 // 获取网络请求的函数
 function fetchPageList(formData: any = {}) { // 需要给一个默认的值防止上面函数报错
-  if(!isQuery) return 
+  if (!isQuery) return
   // 1.获取offset和size
   const size = pageSize.value
   // 2.获取每次的偏移量*10 1：0 2：10
@@ -167,15 +166,18 @@ defineExpose({ fetchPageList })
 <style lang="less" scoped>
 .content {
   padding: 20px 0 20px 0;
+
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 0 20px 0;
   }
+
   .content-list {
     width: 100%;
   }
+
   .pagination {
     display: flex;
     justify-content: flex-end;

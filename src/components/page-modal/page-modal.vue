@@ -13,6 +13,7 @@
                 <el-input
                   v-model="formData[item.prop]"
                   :placeholder="item.placeholder"
+                  with="100px"
                 />
               </template>
               <template v-else-if="item.type === 'select'">

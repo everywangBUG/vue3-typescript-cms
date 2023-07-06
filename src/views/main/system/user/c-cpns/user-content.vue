@@ -132,6 +132,7 @@ function handleCreateNewUser() {
 
 // 编辑用户
 function handleEditClick(rowData: any) {
+  console.log('rowData', rowData);
   emit("editUserInfo", rowData)
 }
 

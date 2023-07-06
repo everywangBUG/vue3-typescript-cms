@@ -3,7 +3,7 @@ export interface IProps {
     pageName: string
     header?: {
       title: string
-      btnTitle: string
+      btnTitle?: string
     },
     propList: any[],
     childrenTree?: any
