@@ -3,26 +3,24 @@
     <PageSearch
       :search-config="searchConfig"
       @query-select="handleQueryClick"
-      @reset-input="handleResetInput" 
+      @reset-input="handleResetInput"
     />
     <PageContent
       :content-config="contentConfig"
       ref="contentRef"
       @create-new-table="handleNewClick"
-      @edit-table-info="handleEditClick" 
-    > 
+      @edit-table-info="handleEditClick"
+    >
       <!-- 具名插槽自定义表格项 -->
       <template #leader="scope">
-        <span class="leader">哈哈哈{{scope.row.leader}}</span>·
+        <span class="leader">哈哈哈{{ scope.row.leader }}</span
+        >·
       </template>
       <template #name="scope">
-        <span class="name">呵呵呵呵{{scope.row[scope.prop]}}</span>
+        <span class="name">呵呵呵呵{{ scope.row[scope.prop] }}</span>
       </template>
     </PageContent>
-    <PageModal
-      :modal-config="modalConfigRef"
-      ref="modalRef"
-    />
+    <PageModal :modal-config="modalConfigRef" ref="modalRef" />
   </div>
 </template>
 
@@ -45,11 +43,11 @@ const modalConfigRef = computed(() => {
   const departments = mainStore.entireDepartments.map((item) => {
     return { label: item.name, value: item.id }
   })
-  modalConfig.propList.forEach(item => {
-    if(item.prop === 'parentId') {
+  modalConfig.propList.forEach((item) => {
+    if (item.prop === 'parentId') {
       item.options.push(...departments)
     }
-  });
+  })
   return modalConfig
 })
 
@@ -60,7 +58,7 @@ const { contentRef, handleQueryClick, handleResetInput } = usePageContent()
 // function handleQueryClick(queryInfo: any) {
 //   contentRef.value?.fetchPageList(queryInfo)
 // }
-  
+
 // // 重置按钮重新请求数据
 // function handleResetInput() {
 //   contentRef.value?.fetchPageList()

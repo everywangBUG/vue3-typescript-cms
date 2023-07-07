@@ -11,7 +11,7 @@ type CallbackFnType = (data?: any) => void
  * @returns {function} handleEditClick 编辑数据
  */
 function usePageModal(editCallback?: CallbackFnType, newCallback?: CallbackFnType): any {
-  const modalRef = ref<InstanceType <typeof PageModal>>()
+  const modalRef = ref<InstanceType<typeof PageModal>>()
   // 点击新建交互
   function handleNewClick() {
     modalRef.value?.setDialogVisible()

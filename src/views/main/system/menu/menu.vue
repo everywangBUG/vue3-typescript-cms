@@ -1,14 +1,11 @@
 <template>
   <div class="menu">
-    <PageContent 
+    <PageContent
       :content-config="contentConfig"
       @create-new-table="handleNewClick"
       @edit-table-info="handleEditClick"
     />
-    <PageModal
-      :modal-config="modalConfig"
-      ref="modalRef"
-    />
+    <PageModal :modal-config="modalConfig" ref="modalRef" />
   </div>
 </template>
 

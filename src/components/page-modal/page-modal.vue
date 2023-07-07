@@ -1,10 +1,11 @@
 <template>
   <div class="modal">
-    <el-dialog v-model="dialogVisible" 
-        :title="isCreateNewUserRef ? modalConfig.header?.newTitle : modalConfig.header?.editTitle" 
-        width="30%" 
-        center
-      >
+    <el-dialog
+      v-model="dialogVisible"
+      :title="isCreateNewUserRef ? modalConfig.header?.newTitle : modalConfig.header?.editTitle"
+      width="30%"
+      center
+    >
       <div class="newdepartment-form">
         <el-form :model="formData" label-width="100px" align-center labelPosition="left">
           <template v-for="item in modalConfig.propList" :key="item.prop">
@@ -25,7 +26,7 @@
                   <template v-for="option in item.options" :key="option.value">
                     <el-option :label="option.label" :value="option.value"></el-option>
                   </template>
-              </el-select>
+                </el-select>
               </template>
               <template v-else-if="item.type === 'custom'">
                 <slot :name="item.slotName"></slot>
@@ -37,9 +38,7 @@
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="handleConfirmClick">
-            确定
-          </el-button>
+          <el-button type="primary" @click="handleConfirmClick"> 确定 </el-button>
         </span>
       </template>
     </el-dialog>
@@ -56,11 +55,10 @@ const props = defineProps<IProps>()
 
 // 使用modal.config.ts中的propList数据动态展示
 const initailForm: any = {}
-for(const item of props.modalConfig.propList) {
+for (const item of props.modalConfig.propList) {
   initailForm[item.prop] = item.initialValue ?? ''
 }
 const formData = reactive<any>(initailForm)
-
 
 const dialogVisible = ref(false)
 let isCreateNewUserRef = ref(true)
@@ -103,9 +101,9 @@ function handleConfirmClick() {
     infoData = { ...infoData, ...props.otherInfo }
   }
   // 不是isCreatedNewUser，编辑数据
-  if (!isCreateNewUserRef.value && editData.value ) {
+  if (!isCreateNewUserRef.value && editData.value) {
     // 此处的id获取是定义的获取到某一行数据的id
-    systemUserStore.editPageInfoAction(props.modalConfig.pageName, editData.value.id , infoData)
+    systemUserStore.editPageInfoAction(props.modalConfig.pageName, editData.value.id, infoData)
   } else {
     // 创建新数据
     systemUserStore.postNewPageInfoAction(props.modalConfig.pageName, infoData)

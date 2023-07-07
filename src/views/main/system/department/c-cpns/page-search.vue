@@ -40,7 +40,7 @@
 import { reactive, ref } from 'vue'
 import { ElForm } from 'element-plus'
 
-// 定义form的数据 
+// 定义form的数据
 const formRef = ref<InstanceType<typeof ElForm>>()
 const searchForm = reactive({
   id: '',

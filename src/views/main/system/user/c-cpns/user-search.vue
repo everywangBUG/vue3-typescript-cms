@@ -38,7 +38,7 @@
               type="daterange"
               range-separator="-"
               start-placeholder="开始日期"
-              end-placeholder="结束日期"  
+              end-placeholder="结束日期"
               size="large"
             />
           </el-form-item>
@@ -56,7 +56,7 @@
 import { reactive, ref } from 'vue'
 import { ElForm } from 'element-plus'
 
-// 定义form的数据 
+// 定义form的数据
 const formRef = ref<InstanceType<typeof ElForm>>()
 const searchForm = reactive({
   name: '',

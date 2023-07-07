@@ -24,21 +24,21 @@
             <template v-else-if="item.type === 'handler'">
               <el-table-column v-bind="item">
                 <template #default="scope">
-                  <el-button 
-                    size="small" 
-                    text 
-                    type="primary" 
-                    icon="Edit" 
+                  <el-button
+                    size="small"
+                    text
+                    type="primary"
+                    icon="Edit"
                     @click="handleEditClick(scope.row)"
                     v-if="isUpdate"
                   >
                     编辑
                   </el-button>
-                  <el-button 
-                    size="small" 
-                    text 
-                    type="danger" 
-                    icon="Delete" 
+                  <el-button
+                    size="small"
+                    text
+                    type="danger"
+                    icon="Delete"
                     @click="handleDeleteClick(scope.row.id)"
                     v-if="isDelete"
                   >
@@ -66,7 +66,7 @@
         </el-table>
       </div>
       <div class="pagination">
-        <el-pagination 
+        <el-pagination
           :current-page="currentPage"
           :page-size="pageSize"
           :page-sizes="[10, 20, 30]"
@@ -74,7 +74,8 @@
           layout="sizes, prev, pager, next, jumper, total"
           :total="pageTotalCount"
           @size-change="handleSizeChange"
-          @current-change="handleCurrentChange" />
+          @current-change="handleCurrentChange"
+        />
       </div>
     </div>
   </div>
@@ -132,7 +133,8 @@ systemUserStore.$onAction(({ name, after }) => {
 })
 
 // 获取网络请求的函数
-function fetchPageList(formData: any = {}) { // 需要给一个默认的值防止上面函数报错
+function fetchPageList(formData: any = {}) {
+  // 需要给一个默认的值防止上面函数报错
   if (!isQuery) return
   // 1.获取offset和size
   const size = pageSize.value
@@ -156,10 +158,10 @@ function handleCreateNewUser() {
 
 // 编辑数据
 function handleEditClick(rowData: any) {
-  emit("editTableInfo", rowData)
+  emit('editTableInfo', rowData)
 }
 
-// 将网络请求的方法暴露出去 
+// 将网络请求的方法暴露出去
 defineExpose({ fetchPageList })
 </script>
 

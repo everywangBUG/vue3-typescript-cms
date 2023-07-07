@@ -7,7 +7,7 @@ export let firstMenu: any = null
  * @description 通过路径获取所有的动态路由path放在一个数组中
  * @returns {Array} localRoutes 本地的路由
  */
-function loadLocalRoutes() :Array<any> {
+function loadLocalRoutes(): Array<any> {
   // 1.1.定义一个数组，类型是router中的类型
   const localRoutes: RouteRecordRaw[] = []
   // 1.2.读取router/main中的所有ts文件，加载main下面的所有的ts文件，中间的两个**表示匹配main下面的所有子目录
@@ -100,7 +100,7 @@ export function mapMenusListToId(menus: any[]): Array<any> {
   function _recurseGetId(menuList: any[]) {
     for (const menu of menuList) {
       if (menu.children) {
-        _recurseGetId(menu.children) 
+        _recurseGetId(menu.children)
       } else {
         ids.push(menu.id)
       }
@@ -115,7 +115,7 @@ export function mapMenusListToId(menus: any[]): Array<any> {
  * @param menus 菜单数组
  * @returns {Array} permissions 权限信息数组
  */
-export function mapMenusListToPermissions(menus: any[]) :Array<any> {
+export function mapMenusListToPermissions(menus: any[]): Array<any> {
   const permissions: string[] = []
   function _recurseGetPermissions(menuList: any[]) {
     for (const menu of menuList) {

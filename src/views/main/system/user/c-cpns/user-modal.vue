@@ -1,14 +1,14 @@
 <template>
   <div class="modal">
-    <el-dialog 
+    <el-dialog
       v-model="dialogVisible"
-      :title="isCreateNewUserRef ? '新建用户' : '编辑用户'" 
+      :title="isCreateNewUserRef ? '新建用户' : '编辑用户'"
       width="30%"
       center
       :close-on-click-modal="false"
     >
       <div class="newuser-form">
-        <el-form 
+        <el-form
           :model="formData"
           label-width="100px"
           align-center
@@ -47,9 +47,7 @@
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="handleConfirmClick(formDataRef)">
-            确定
-          </el-button>
+          <el-button type="primary" @click="handleConfirmClick(formDataRef)"> 确定 </el-button>
         </span>
       </template>
     </el-dialog>
@@ -77,27 +75,27 @@ const formData = reactive<IRuleForm>({
 const rules = reactive<FormRules>({
   name: [
     { required: true, message: '请输入姓名', trigger: 'blur' },
-    { min: 1, max: 10, message: '长度在 1 到 10 个字符之间', trigger: 'blur' },
+    { min: 1, max: 10, message: '长度在 1 到 10 个字符之间', trigger: 'blur' }
   ],
   realname: [
     { required: true, message: '请输入真实姓名', trigger: 'blur' },
-    { min: 1, max: 20, message: '长度在 1 到 20 个字符之间', trigger: 'blur' },
+    { min: 1, max: 20, message: '长度在 1 到 20 个字符之间', trigger: 'blur' }
   ],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
     { min: 3, max: 18, message: '长度在 3 到 18 个字符之间', trigger: 'blur' },
-    { pattern: /^[a-z0-9]{3,18}$/, message: '请输入正确格式的密码', trigger: 'blur' },
+    { pattern: /^[a-z0-9]{3,18}$/, message: '请输入正确格式的密码', trigger: 'blur' }
   ],
   cellphone: [
     { required: true, message: '请输入手机号或固定电话', trigger: 'change' },
-    { pattern: /^((0\d{2,3}-\d{7,8})|(1[34578]\d{9}))$/, message: '请输入正确格式的手机号或固定电话', trigger: 'change' },
+    {
+      pattern: /^((0\d{2,3}-\d{7,8})|(1[34578]\d{9}))$/,
+      message: '请输入正确格式的手机号或固定电话',
+      trigger: 'change'
+    }
   ],
-  roleId: [
-    { required: true, message: '请选择角色', trigger: 'change' },
-  ],
-  departmentId: [
-    { required: true, message: '请选择部门', trigger: 'change' },
-  ]
+  roleId: [{ required: true, message: '请选择角色', trigger: 'change' }],
+  departmentId: [{ required: true, message: '请选择部门', trigger: 'change' }]
 })
 
 const dialogVisible = ref(false)
@@ -134,7 +132,6 @@ function setDialogVisible(isCreateNewUser: boolean = true, rowData?: any) {
   }
 }
 
-
 // 添加用户的逻辑
 async function handleConfirmClick(formEl: FormInstance | undefined) {
   if (!formEl) return
@@ -142,9 +139,9 @@ async function handleConfirmClick(formEl: FormInstance | undefined) {
     if (valid) {
       // 编辑用户
       if (!isCreateNewUserRef.value && editData.value) {
-        systemUserStore.editUserInfoAction(editData.value.id , formData)
+        systemUserStore.editUserInfoAction(editData.value.id, formData)
         dialogVisible.value = false
-      // 新建用户
+        // 新建用户
       } else {
         systemUserStore.postNewUserInfoAction(formData)
         dialogVisible.value = false

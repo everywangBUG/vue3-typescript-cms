@@ -61,7 +61,7 @@ const useSystemStore = defineStore('system', {
         // 2.重新请求数据
         this.postUsersListAction({ offset: 0, size: 10 })
         // 提示语
-        const { code, data } = editUserInfoRes.data 
+        const { code, data } = editUserInfoRes.data
         messagePop(code, data)
       } catch (err) {
         console.log(err)
@@ -111,7 +111,7 @@ const useSystemStore = defineStore('system', {
         console.log(err)
       }
     },
-    
+
     // 根据页面编辑数据
     async editPageInfoAction(pageName: string, id: number, queryInfo: any) {
       try {

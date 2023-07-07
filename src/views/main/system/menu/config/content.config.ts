@@ -2,7 +2,7 @@
 const contentConfig = {
   pageName: 'menu',
   header: {
-    title: '菜单管理',
+    title: '菜单管理'
   },
   propList: [
     { width: '180', prop: 'name', label: '菜单名称', align: 'center' },

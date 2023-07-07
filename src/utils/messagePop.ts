@@ -4,13 +4,12 @@ export function messagePop(code: number, data: string) {
   if (code === 0 && data) {
     ElMessage({
       message: `${data}`,
-      type: 'success',
+      type: 'success'
     })
   } else if (code === 400 && data) {
     ElMessage({
       message: `${data}`,
-      type: 'warning',
+      type: 'warning'
     })
-    
   }
 }

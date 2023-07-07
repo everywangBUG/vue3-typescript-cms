@@ -44,22 +44,24 @@
           </el-table-column>
           <el-table-column label="操作" align="center">
             <template #default="scope">
-              <el-button 
-                size="small" 
-                text type="primary" 
-                icon="Edit" 
+              <el-button
+                size="small"
+                text
+                type="primary"
+                icon="Edit"
                 @click="handleEditClick(scope.row)"
               >
-              编辑
+                编辑
               </el-button>
-              <el-button 
-                size="small" 
-                text type="danger" 
-                icon="Delete" 
+              <el-button
+                size="small"
+                text
+                type="danger"
+                icon="Delete"
                 @click="handleDeleteClick(scope.row.id)"
               >
-              删除
-            </el-button>
+                删除
+              </el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -109,7 +111,8 @@ function handleCurrentChange() {
 }
 
 // 获取网络请求的函数
-function fetchUserList(formData: any = {}) { // 需要给一个默认的值防止上面函数报错
+function fetchUserList(formData: any = {}) {
+  // 需要给一个默认的值防止上面函数报错
   // 1.获取offset和size
   const size = pageSize.value
   // 2.获取每次的偏移量*10 1：0 2：10
@@ -132,11 +135,11 @@ function handleCreateNewUser() {
 
 // 编辑用户
 function handleEditClick(rowData: any) {
-  console.log('rowData', rowData);
-  emit("editUserInfo", rowData)
+  console.log('rowData', rowData)
+  emit('editUserInfo', rowData)
 }
 
-// 将网络请求的方法暴露出去 
+// 将网络请求的方法暴露出去
 defineExpose({ fetchUserList })
 </script>
 

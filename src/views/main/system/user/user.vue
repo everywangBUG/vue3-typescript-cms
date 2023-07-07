@@ -5,7 +5,11 @@
       @query-select="handleQuerySelect"
       @reset-input="handleResetInput"
     />
-    <UserContent ref="contentRef" @create-newuser="handleCreateNewUser" @edit-user-info="handleEditClick"/>
+    <UserContent
+      ref="contentRef"
+      @create-newuser="handleCreateNewUser"
+      @edit-user-info="handleEditClick"
+    />
     <UserModal ref="modalRef" />
   </div>
 </template>
@@ -41,7 +45,6 @@ function handleEditClick(rowData: any) {
 function handleCreateNewUser() {
   modalRef.value?.setDialogVisible()
 }
-
 </script>
 
 <style lang="less" scoped>

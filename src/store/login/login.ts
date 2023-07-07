@@ -11,7 +11,7 @@ import { defineStore } from 'pinia'
 interface ILoginState {
   token: string
   userInfo: any
-  menuInfo: any,
+  menuInfo: any
   permission: any
 }
 
@@ -35,12 +35,12 @@ const useLoginStore = defineStore(LOGIN, {
       const userInfoRes = await userInfoById(id)
       const userInfo = userInfoRes.data.data
       this.userInfo = userInfo
-      
+
       // 3.根据用户角色权限动态获取菜单信息，将菜单信息存到state和浏览器内存中
       const menusInfoRes = await menusInfoById(this.userInfo.role.id)
       const menusInfo = menusInfoRes.data.data
       this.menuInfo = menusInfo
-      
+
       // 4.使用localStorage或sessionStorages本地缓存，可以使用封装过后的localStorage
       localCache.setCache(USER_INFO, userInfo)
       localCache.setCache(MENUS_INFO, menusInfo)

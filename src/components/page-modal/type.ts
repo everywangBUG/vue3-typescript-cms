@@ -1,10 +1,10 @@
 export interface IModalConfig {
-  pageName: string,
+  pageName: string
   header?: {
     newTitle: string
     editTitle: string
   }
-  propList: any[],
+  propList: any[]
   otherInfo?: any
 }
 
@@ -14,12 +14,12 @@ export interface IModalProps {
 
 export interface IProps {
   modalConfig: {
-    pageName: string,
+    pageName: string
     header?: {
       newTitle: string
       editTitle: string
     }
     propList: any[]
-  },
+  }
   otherInfo?: any
 }

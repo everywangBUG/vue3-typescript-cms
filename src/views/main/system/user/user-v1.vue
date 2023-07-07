@@ -1,7 +1,11 @@
 <template>
   <div class="user">
-    <UserSearch @query-select="handleQuerySelect" @reset-input="handleResetInput"/>
-    <UserContent ref="contentRef" @create-newuser="handleCreateNewUser" @edit-user-info="handleEditClick"/>
+    <UserSearch @query-select="handleQuerySelect" @reset-input="handleResetInput" />
+    <UserContent
+      ref="contentRef"
+      @create-newuser="handleCreateNewUser"
+      @edit-user-info="handleEditClick"
+    />
     <UserModal ref="modalRef" />
   </div>
 </template>
@@ -10,7 +14,7 @@
 import UserSearch from './c-cpns/user-search.vue'
 import UserContent from './c-cpns/user-content.vue'
 import UserModal from './c-cpns/user-modal.vue'
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 // 处理user-search中的传来的数据
 const contentRef = ref<InstanceType<typeof UserContent>>()
@@ -35,7 +39,6 @@ function handleEditClick(rowData: any) {
 function handleCreateNewUser() {
   modalRef.value?.setDialogVisible()
 }
-
 </script>
 
 <style lang="less" scoped>

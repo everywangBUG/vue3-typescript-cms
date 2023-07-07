@@ -12,7 +12,7 @@ const contentConfig = {
     { type: 'normal', width: '180', prop: 'name', label: '角色名称', align: 'center' },
     { type: 'timer', width: '350', prop: 'createTime', label: '创建时间', align: 'center' },
     { type: 'timer', width: '350', prop: 'updateTime', label: '更新时间', align: 'center' },
-    { type: 'handler', label: '操作', align: 'center'}
+    { type: 'handler', label: '操作', align: 'center' }
   ]
 }
 

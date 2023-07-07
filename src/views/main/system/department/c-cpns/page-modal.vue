@@ -1,6 +1,11 @@
 <template>
   <div class="modal">
-    <el-dialog v-model="dialogVisible" :title="isCreateNewUserRef ? '新建部门' : '编辑部门'" width="30%" center>
+    <el-dialog
+      v-model="dialogVisible"
+      :title="isCreateNewUserRef ? '新建部门' : '编辑部门'"
+      width="30%"
+      center
+    >
       <div class="newdepartment-form">
         <el-form :model="formData" label-width="100px" align-center labelPosition="left">
           <el-form-item label="部门名称" prop="name">
@@ -21,9 +26,7 @@
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="handleConfirmClick">
-            确定
-          </el-button>
+          <el-button type="primary" @click="handleConfirmClick"> 确定 </el-button>
         </span>
       </template>
     </el-dialog>
@@ -79,9 +82,9 @@ function setDialogVisible(isCreateNewUser: boolean = true, rowData?: any) {
 function handleConfirmClick() {
   dialogVisible.value = false
   // 不是isCreatedNewUser，编辑用户
-  if (!isCreateNewUserRef.value && editData.value ) {
+  if (!isCreateNewUserRef.value && editData.value) {
     // 此处的id获取是定义的获取到某一行数据的id
-    systemUserStore.editPageInfoAction('department', editData.value.id , formData)
+    systemUserStore.editPageInfoAction('department', editData.value.id, formData)
   } else {
     // 创建新部门
     systemUserStore.postNewPageInfoAction('department', formData)

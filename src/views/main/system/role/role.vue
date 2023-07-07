@@ -1,30 +1,26 @@
 <template>
   <div class="role">
-    <PageSearch 
+    <PageSearch
       :search-config="searchConfig"
       @query-select="handleQueryClick"
       @reset-input="handleResetInput"
     />
-    <PageContent 
+    <PageContent
       :content-config="contentConfig"
       ref="contentRef"
       @create-new-table="handleNewClick"
       @edit-table-info="handleEditClick"
     />
-    <PageModal 
-      :modal-config="modalConfig"
-      :other-info="otherInfo"
-      ref="modalRef"
-    >
+    <PageModal :modal-config="modalConfig" :other-info="otherInfo" ref="modalRef">
       <template #elTree>
         <el-tree
-        :data="menuList"
-        show-checkbox
-        node-key="id"
-        :props="{ children: 'children', label: 'name'}"
-        @check="handleCheckClick"
-        ref="treeRef"
-      />
+          :data="menuList"
+          show-checkbox
+          node-key="id"
+          :props="{ children: 'children', label: 'name' }"
+          @check="handleCheckClick"
+          ref="treeRef"
+        />
       </template>
     </PageModal>
   </div>
@@ -55,7 +51,7 @@ const { menuList } = storeToRefs(mainUseStore)
 const otherInfo = ref({})
 const treeRef = ref<InstanceType<typeof ElTree>>()
 function handleCheckClick(data1: any, data2: any) {
-  const menuList = [ ...data2.checkedKeys, ...data2.halfCheckedKeys ]
+  const menuList = [...data2.checkedKeys, ...data2.halfCheckedKeys]
   otherInfo.value = { menuList }
 }
 

@@ -9,16 +9,13 @@
               <!-- <component :is="`'el-'+${item.type}`"></component> -->
               <!-- 第二种情况，使用template -->
               <template v-if="item.type === 'input'">
-                <el-input
-                  v-model="searchForm[item.prop]"
-                  :placeholder="item.placeholder" 
-                />
+                <el-input v-model="searchForm[item.prop]" :placeholder="item.placeholder" />
               </template>
               <template v-if="item.type === 'data-picker'">
                 <el-date-picker
                   v-model="searchForm[item.prop]"
                   placeholder="请选择创建时间"
-                  type="daterange"  
+                  type="daterange"
                   range-separator="-"
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
@@ -52,7 +49,7 @@
 import { reactive, ref } from 'vue'
 import { ElForm } from 'element-plus'
 import type { IProps } from '@/components/page-search/type'
-import usePermissions from '@/hooks/usePermissions';
+import usePermissions from '@/hooks/usePermissions'
 
 const emit = defineEmits(['querySelect', 'resetInput'])
 const props = defineProps<IProps>()
@@ -62,11 +59,11 @@ const isQuery = usePermissions(`${props.searchConfig.pageName}:query`)
 
 // 使用search.config.ts对象初始化定义form的数据
 const initialForm: any = {}
-for(const item of props.searchConfig.formItems) {
+for (const item of props.searchConfig.formItems) {
   initialForm[item.prop] = item.initialValue ?? ''
 }
 const searchForm = reactive(initialForm)
-  
+
 // 查询功能的实现
 function handleQueryClick() {
   // 发送querySelect

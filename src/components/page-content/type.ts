@@ -4,8 +4,8 @@ export interface IProps {
     header?: {
       title: string
       btnTitle?: string
-    },
-    propList: any[],
+    }
+    propList: any[]
     childrenTree?: any
   }
 }
