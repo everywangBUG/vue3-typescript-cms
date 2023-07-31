@@ -70,7 +70,6 @@ function loginAction(isRmbPsw: boolean) {
           localCache.removeCache(CACHE_PASSWORD)
         }
       })
-
       // 3.记住密码
     } else {
       ElMessage.error({ message: '哎呦！请输入合法的用户名和密码！' })

@@ -5,14 +5,15 @@
       :title="isCreateNewUserRef ? '新建部门' : '编辑部门'"
       width="30%"
       center
+      :close-on-click-modal="false"
     >
       <div class="newdepartment-form">
-        <el-form :model="formData" label-width="100px" align-center labelPosition="left">
+        <el-form :model="formData" label-width="100px" align-center labelPosition="left" ref="formDataRef" :rules="departmentRules">
           <el-form-item label="部门名称" prop="name">
-            <el-input placeholder="请输入部门名称" v-model="formData.name" />
+            <el-input placeholder="请输入部门名称" v-model="formData.name"/>
           </el-form-item>
           <el-form-item label="部门领导" prop="leader">
-            <el-input placeholder="请输入部门领导名字" v-model="formData.leader" />
+            <el-input placeholder="请输入部门领导名字" v-model="formData.leader"/>
           </el-form-item>
           <el-form-item label="选择部门" prop="parentId">
             <el-select placeholder="请选择上级部门" v-model="formData.parentId" style="width: 100%">
@@ -26,7 +27,7 @@
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="handleConfirmClick"> 确定 </el-button>
+          <el-button type="primary" @click="handleConfirmClick(formDataRef)"> 确定 </el-button>
         </span>
       </template>
     </el-dialog>
@@ -37,9 +38,17 @@
 import useMainStore from '@/store/main/main'
 import useSystemStore from '@/store/main/system/system'
 import { storeToRefs } from 'pinia'
-import { reactive, ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 
-const formData = reactive<any>({
+import type { FormRules, FormInstance } from 'element-plus'
+
+interface IFormData {
+  name: string
+  leader: string
+  parentId: string
+}
+
+const formData = reactive<IFormData>({
   name: '',
   leader: '',
   parentId: ''
@@ -78,18 +87,40 @@ function setDialogVisible(isCreateNewUser: boolean = true, rowData?: any) {
   }
 }
 
+
+// 表单规则验证
+const departmentRules = reactive<FormRules> ({
+  name: [{  required: true, message: '请输入部门名称' }],
+  leader: [{ required: true, message: '请输入部门领导名字' }],
+  parentId: [{ required: true, message: '请输入上级部门id' }]
+})
+
+const formDataRef = ref<FormInstance>()
 // 添加部门的逻辑
-function handleConfirmClick() {
-  dialogVisible.value = false
-  // 不是isCreatedNewUser，编辑用户
-  if (!isCreateNewUserRef.value && editData.value) {
-    // 此处的id获取是定义的获取到某一行数据的id
-    systemUserStore.editPageInfoAction('department', editData.value.id, formData)
-  } else {
-    // 创建新部门
-    systemUserStore.postNewPageInfoAction('department', formData)
-  }
+async function handleConfirmClick(formDataRef: FormInstance | undefined) {
+  // 表单验证
+  if (!formDataRef) return
+  await formDataRef.validate((valid) => {
+    if (valid) {
+      // 编辑部门
+      if (!isCreateNewUserRef.value && editData.value) {
+        // 此处的id获取是定义的获取到某一行数据的id
+        systemUserStore.editPageInfoAction('department', editData.value.id, formData)
+        dialogVisible.value = false
+      } else {
+        // 创建新部门
+        systemUserStore.postNewPageInfoAction('department', formData)
+        dialogVisible.value = false
+      }
+    }
+    return false
+  })
 }
+
+// 弹框消失去除验证规则
+watch(dialogVisible, (val) => {
+  if (!val) formDataRef.value?.clearValidate()
+})
 
 // 暴露属性和方法(统一暴露方法)
 defineExpose({ setDialogVisible })

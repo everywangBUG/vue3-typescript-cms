@@ -5,9 +5,10 @@
       :title="isCreateNewUserRef ? modalConfig.header?.newTitle : modalConfig.header?.editTitle"
       width="30%"
       center
+      :close-on-click-modal="false"
     >
       <div class="newdepartment-form">
-        <el-form :model="formData" label-width="100px" align-center labelPosition="left">
+        <el-form :model="formData" label-width="100px" align-center labelPosition="left" :rules="rules">
           <template v-for="item in modalConfig.propList" :key="item.prop">
             <el-form-item :label="item.label" :prop="item.prop">
               <template v-if="item.type === 'input'">
@@ -15,6 +16,7 @@
                   v-model="formData[item.prop]"
                   :placeholder="item.placeholder"
                   with="100px"
+                  @blur='handelBlurInput'
                 />
               </template>
               <template v-else-if="item.type === 'select'">
@@ -51,10 +53,13 @@ import { reactive, ref } from 'vue'
 // 3.3版本之前目前不支持从外部导入，3.3开始支持
 import type { IProps } from '@/components/page-modal/type'
 
+import Schema from 'async-validator'
+
 const props = defineProps<IProps>()
 
 // 使用modal.config.ts中的propList数据动态展示
 const initailForm: any = {}
+// 给定初始值
 for (const item of props.modalConfig.propList) {
   initailForm[item.prop] = item.initialValue ?? ''
 }
@@ -110,6 +115,28 @@ function handleConfirmClick() {
   }
 }
 
+// 表单规则验证
+const departmentRules = {
+  name: {  required: true, message: '请输入部门名称' },
+  leader: { required: true, message: '请输入部门领导' },
+  parentId: { required: true, message: '请输入上级部门id' }
+}
+
+const validator = new Schema(departmentRules)
+function handelBlurInput() {
+  for (let item in formData) {
+    console.log('item', item)
+    validator.validate({ name: formData[item]}, (err, fields) => {
+      if (err && fields.name) {
+        console.log(fields.name[0].message)
+        console.log('er', err)
+        return err
+      }
+    })
+
+  }
+}
+
 // 暴露属性和方法(统一暴露方法)
 defineExpose({ setDialogVisible })
 </script>
@@ -119,8 +146,8 @@ defineExpose({ setDialogVisible })
     padding: 0 80px;
 
     :deep(.el-form) {
-      .el-form-item {
-        .el-form-item__label {
+      &-item {
+        &__label {
           justify-content: flex-end;
           width: 80px;
         }

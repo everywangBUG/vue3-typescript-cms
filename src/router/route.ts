@@ -35,6 +35,7 @@ const router = createRouter({
  */
 export function addRoutesWithMenu(menusInfo: any) {
   // 获取匹配的所有路由
+  console.log('menusInfo', { ...menusInfo})
   const routes = mapMenusRoutes(menusInfo)
   // 动态添加到router中
   routes.forEach((route) => router.addRoute('main', route))

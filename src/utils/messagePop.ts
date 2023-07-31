@@ -1,6 +1,6 @@
 import { ElMessage } from 'element-plus'
 
-export function messagePop(code: number, data: string) {
+export function messagePop( data: string, code?: number ) {
   if (code === 0 && data) {
     ElMessage({
       message: `${data}`,
@@ -12,4 +12,11 @@ export function messagePop(code: number, data: string) {
       type: 'warning'
     })
   }
+}
+
+export function messageRule(data: string) {
+  ElMessage({
+    message: `${data}`,
+    type: 'warning'
+  })
 }

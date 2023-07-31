@@ -3,7 +3,7 @@
     <PageSearch @query-select="handleQueryClick" @reset-input="handleResetInput" />
     <PageContent
       ref="contentRef"
-      @create-new-table="handleNewClick"
+      @create-new-department="handleNewClick"
       @edit-table-info="handleEditClick"
     />
     <PageModal ref="modalRef" />
